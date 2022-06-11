@@ -7,15 +7,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Hashtable;
 
 @Service
 public class SyncService {
 
-    private Library library;
+    private Hashtable<Integer,ReferenceDTO> referenceTable;
 
     @Autowired
     public SyncService() {
-        this.library = new Library();
+        this.referenceTable = new Hashtable<>();
     }
 
     public ArrayList<ReferenceDTO> sync (ReferenceLibraryDTO referenceLibraryDTO) {
@@ -23,21 +24,21 @@ public class SyncService {
         ArrayList<ReferenceDTO> list = new ArrayList<>();
 
         for(ReferenceDTO referenceDTO: referenceLibraryDTO.getNewReferencesList()){
-          library.setReference(referenceDTO);
+            referenceTable.put(referenceDTO.getId(),referenceDTO);
         }
 
         for(ReferenceDTO referenceDTO: referenceLibraryDTO.getUpdatedReferencesList()){
-            library.getReferenceTable().remove(referenceDTO.getId());
-            library.setReference(referenceDTO);
+            referenceTable.remove(referenceDTO.getId());
+            referenceTable.put(referenceDTO.getId(),referenceDTO);
         }
 
         for(Integer id: referenceLibraryDTO.getDeletedReferencesList()){
-            library.getReferenceTable().remove(id);
+            referenceTable.remove(id);
         }
 
-        Enumeration<Integer> e = library.getReferenceTable().keys();
+        Enumeration<Integer> e = referenceTable.keys();
         while(e.hasMoreElements()) {
-            list.add(library.getReferenceTable().get(e.nextElement()));
+            list.add(referenceTable.get(e.nextElement()));
         }
 
         return list;

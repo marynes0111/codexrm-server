@@ -70,6 +70,6 @@ public class SyncTest {
         libraryTime1.setDeletedReference(3);
 
         ArrayList<ReferenceDTO> listTime1  = syncService.sync(libraryTime1);
-        Assertions.assertEquals(5, listTime0.size());
+        Assertions.assertEquals(5, listTime1.size());
     }
 }
