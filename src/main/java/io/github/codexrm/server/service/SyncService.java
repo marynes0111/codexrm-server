@@ -1,10 +1,10 @@
 package io.github.codexrm.server.service;
 
-import io.github.codexrm.server.dto.ReferenceDTO;
-import io.github.codexrm.server.dto.ReferenceLibraryDTO;
+import io.github.codexrm.server.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -20,7 +20,7 @@ public class SyncService {
     }
 
     public ArrayList<ReferenceDTO> sync (ReferenceLibraryDTO referenceLibraryDTO) {
-
+        init();
         ArrayList<ReferenceDTO> list = new ArrayList<>();
 
         for(ReferenceDTO referenceDTO: referenceLibraryDTO.getNewReferencesList()){
@@ -42,5 +42,27 @@ public class SyncService {
         }
 
         return list;
+    }
+    private void init(){
+        ConferenceProceedingsReferenceDTO r0 = new ConferenceProceedingsReferenceDTO
+                ("Urbina,Odri", "Impcto economico en el este del pais", LocalDate.of(20021,01,01),
+                        "gg",0, "3","4","Mexico,DF");
+
+        ThesisReferenceDTO r1 = new ThesisReferenceDTO("Ramirez,Juan",
+                "Violencia en relaciones de parejas",LocalDate.of(2004,01,01),
+                "ff",1,"Iberoamericana","Masters","Puebla");
+
+        ArticleReferenceDTO r2 = new ArticleReferenceDTO("Allen,James",
+                "Cultural construction zones",LocalDate.of(2004,01,01),
+                "aa",2,"theacher education","55","3","214-226");
+
+        BookReferenceDTO r3 = new BookReferenceDTO("Stallings,William",
+                "Organzacion y arquitecturas de computadoras",LocalDate.of(2005,01,01),
+                "bb",3,"MartinRomero,Miguel","1","18","Guayaquil,Ecuador","21");
+
+        referenceTable.put(r0.getId(),r0);
+        referenceTable.put(r1.getId(),r1);
+        referenceTable.put(r2.getId(),r2);
+        referenceTable.put(r3.getId(),r3);
     }
 }

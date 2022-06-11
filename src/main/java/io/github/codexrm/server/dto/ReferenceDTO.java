@@ -1,7 +1,18 @@
 package io.github.codexrm.server.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.time.LocalDate;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({@JsonSubTypes.Type(value = ArticleReferenceDTO.class, name = "articleDTO"),
+        @JsonSubTypes.Type(value = BookReferenceDTO.class, name = "bookDTO"),
+        @JsonSubTypes.Type(value = BookSectionReferenceDTO.class, name = "bookSectionDTO"),
+        @JsonSubTypes.Type(value = ThesisReferenceDTO.class, name = "thesisDTO"),
+        @JsonSubTypes.Type(value = BookLetReferenceDTO.class, name = "bookLetDTO"),
+        @JsonSubTypes.Type(value = ConferenceProceedingsReferenceDTO.class, name = "proceedingsDTO")})
 public class ReferenceDTO {
 
     protected String author;
@@ -36,12 +47,31 @@ public class ReferenceDTO {
         this.title = title;
     }
 
-    public LocalDate getDate() {
+    @JsonIgnore
+    public LocalDate getLocalDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    @JsonIgnore
+    public void setLocalDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getDate() {
+        if (date == null){
+            return "0000-00-00";
+        } else{
+            return date.toString();
+        }
+    }
+
+    public void setDate(String date) {
+        if (date.equals("0000-00-00")) {
+            this.date = null;
+        }else{
+            String[] partDate = date.split("-", 3);
+            this.date = LocalDate.of(Integer.parseInt(partDate[0]),Integer.parseInt(partDate[1]),Integer.parseInt(partDate[2]));
+        }
     }
 
     public String getNote() {
