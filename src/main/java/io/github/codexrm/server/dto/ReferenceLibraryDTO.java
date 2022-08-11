@@ -1,13 +1,14 @@
 package io.github.codexrm.server.dto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ReferenceLibraryDTO {
 
-    private ArrayList<ReferenceDTO> newReferencesList;
-    private ArrayList<ReferenceDTO> updatedReferencesList;
-    private ArrayList<Integer> deletedReferencesList;
-    private Integer UserId;
+    private List<ReferenceDTO> newReferencesList;
+    private List<ReferenceDTO> updatedReferencesList;
+    private List<Integer> deletedReferencesList;
+    private Integer userId;
 
     public ReferenceLibraryDTO() {
         this.newReferencesList = new ArrayList<>();
@@ -15,14 +16,14 @@ public class ReferenceLibraryDTO {
         this.deletedReferencesList = new ArrayList<>();
     }
 
-    public ReferenceLibraryDTO(ArrayList<ReferenceDTO> newReferencesList, ArrayList<ReferenceDTO> updatedReferencesList, ArrayList<Integer> deletedReferencesList, Integer userId) {
+    public ReferenceLibraryDTO(List<ReferenceDTO> newReferencesList, List<ReferenceDTO> updatedReferencesList, List<Integer> deletedReferencesList, Integer userId) {
         this.newReferencesList = newReferencesList;
         this.updatedReferencesList = updatedReferencesList;
         this.deletedReferencesList = deletedReferencesList;
-        UserId = userId;
+        this.userId = userId;
     }
 
-    public ArrayList<ReferenceDTO> getNewReferencesList() {
+    public List<ReferenceDTO> getNewReferencesList() {
         return newReferencesList;
     }
 
@@ -30,7 +31,7 @@ public class ReferenceLibraryDTO {
         this.newReferencesList.add(newReference);
     }
 
-    public ArrayList<ReferenceDTO> getUpdatedReferencesList() {
+    public List<ReferenceDTO> getUpdatedReferencesList() {
         return updatedReferencesList;
     }
 
@@ -38,7 +39,7 @@ public class ReferenceLibraryDTO {
         this.updatedReferencesList.add(updatedReference);
     }
 
-    public ArrayList<Integer> getDeletedReferencesList() {
+    public List<Integer> getDeletedReferencesList() {
         return deletedReferencesList;
     }
 
@@ -47,10 +48,10 @@ public class ReferenceLibraryDTO {
     }
 
     public Integer getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(Integer userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 }

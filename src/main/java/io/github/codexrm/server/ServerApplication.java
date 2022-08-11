@@ -15,5 +15,4 @@ public class ServerApplication {
 	public ModelMapper modelMapper(){
 		return new ModelMapper();
 	}
-
 }

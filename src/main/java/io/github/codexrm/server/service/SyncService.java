@@ -1,11 +1,10 @@
 package io.github.codexrm.server.service;
 
-import io.github.codexrm.server.Model.Reference;
-import io.github.codexrm.server.Model.User;
+import io.github.codexrm.server.model.Reference;
+import io.github.codexrm.server.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

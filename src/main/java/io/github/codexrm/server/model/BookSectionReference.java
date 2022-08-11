@@ -1,4 +1,4 @@
-package io.github.codexrm.server.Model;
+package io.github.codexrm.server.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -28,5 +28,4 @@ public class BookSectionReference extends BookReference{
     public String getChapter() {return chapter;}
 
     public void setChapter(String chapter) {this.chapter = chapter;}
-
 }

@@ -1,20 +1,18 @@
 package io.github.codexrm.server;
 
-import io.github.codexrm.server.Model.*;
-import io.github.codexrm.server.Repository.ReferenceRepository;
+import io.github.codexrm.server.model.*;
 import io.github.codexrm.server.service.ReferenceService;
 import io.github.codexrm.server.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class ReferenceTest {
+class ReferenceTest {
 
     @Autowired
     ReferenceService referenceService;
@@ -22,15 +20,9 @@ public class ReferenceTest {
     UserService userService;
 
     @Test
-    void deleteAllUser() {
-        User userL = userService.findById(10);
-        referenceService.deleteAll(userL);
-    }
-
-    @Test
     void testReferenceServiceCRUD() {
-        User userM = userService.findById(9);
-        User userL = userService.findById(10);
+        User userM = userService.findById(12);
+        User userL = userService.findById(13);
 
         ArticleReference article = new ArticleReference("Allen,James","Construccion de la zona de cultivo",
                 LocalDate.of(2004,04,04),"aa",userM,"Educacion","55","3","214-226");
@@ -69,6 +61,5 @@ public class ReferenceTest {
         assertEquals("Educacion", articleA.getJournal());
 
        referenceService.delete(book.getId());
-
     }
 }

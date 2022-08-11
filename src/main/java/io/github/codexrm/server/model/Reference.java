@@ -1,4 +1,4 @@
-package io.github.codexrm.server.Model;
+package io.github.codexrm.server.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;

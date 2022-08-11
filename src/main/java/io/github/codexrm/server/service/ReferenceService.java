@@ -1,8 +1,8 @@
 package io.github.codexrm.server.service;
 
-import io.github.codexrm.server.Model.Reference;
-import io.github.codexrm.server.Model.User;
-import io.github.codexrm.server.Repository.ReferenceRepository;
+import io.github.codexrm.server.model.Reference;
+import io.github.codexrm.server.model.User;
+import io.github.codexrm.server.repository.ReferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +39,7 @@ public class ReferenceService {
         if (reference.getId() != null && !referenceRepository.existsById(reference.getId())) {
             throw new EntityNotFoundException("There is no entity with such ID in the database.");
         }
-        if (reference.getUserid().getId() == findById(reference.getId()).getUserid().getId()) {
+        if (reference.getUserid().getId() != findById(reference.getId()).getUserid().getId()) {
             throw new EntityExistsException("There is  entity with such User ID in the database.");
         }
 

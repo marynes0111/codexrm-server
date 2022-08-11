@@ -1,21 +1,14 @@
 package io.github.codexrm.server.controller;
 
-import io.github.codexrm.server.Component.DTOConverter;
-import io.github.codexrm.server.Model.Reference;
-import io.github.codexrm.server.Model.User;
-import io.github.codexrm.server.dto.ReferenceDTO;
-import io.github.codexrm.server.dto.ReferenceLibraryDTO;
+import io.github.codexrm.server.component.DTOConverter;
+import io.github.codexrm.server.model.User;
 import io.github.codexrm.server.dto.UserDTO;
-import io.github.codexrm.server.service.SyncService;
 import io.github.codexrm.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/User")

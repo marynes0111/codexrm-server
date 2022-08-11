@@ -1,23 +1,18 @@
 package io.github.codexrm.server;
 
-import io.github.codexrm.server.Model.User;
+import io.github.codexrm.server.model.User;
 import io.github.codexrm.server.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class UserTest {
+class UserTest {
 
     @Autowired
     UserService userService;
-
-    @Test
-    void deleteAllUser() {
-        userService.deleteAll();
-    }
 
     @Test
     void testUserServiceCRUD() {

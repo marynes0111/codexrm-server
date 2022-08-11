@@ -1,4 +1,4 @@
-package io.github.codexrm.server.Model;
+package io.github.codexrm.server.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -36,5 +36,4 @@ public class ThesisReference extends Reference{
     public String getSchool() {return school;}
 
     public void setSchool(String school) {this.school = school;}
-
 }

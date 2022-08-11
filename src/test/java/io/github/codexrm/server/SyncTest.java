@@ -1,9 +1,8 @@
 package io.github.codexrm.server;
 
-import io.github.codexrm.server.Model.*;
+import io.github.codexrm.server.model.*;
 import io.github.codexrm.server.service.SyncService;
 import io.github.codexrm.server.service.UserService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class SyncTest {
+class SyncTest {
 
     @Autowired
     SyncService syncService;
@@ -24,9 +23,9 @@ public class SyncTest {
     void syncReference() {
         User userM = userService.findById(9);
 
-       ConferenceProceedingReference r0 = new ConferenceProceedingReference
-                ("Urbina,Odri", "Impcto economico en el este del pais", LocalDate.of(20021,01,01),
-                        "gg",userM, "3","4","Mexico,DF");
+       ConferenceProceedingReference r0 = new ConferenceProceedingReference("Urbina,Odri",
+               "Impcto economico en el este del pais", LocalDate.of(20021,01,01),
+               "gg",userM, "3","4","Mexico,DF");
 
         ThesisReference r1 = new ThesisReference("Ramirez,Juan",
                 "Violencia en relaciones de parejas",LocalDate.of(2004,01,01),
@@ -46,8 +45,9 @@ public class SyncTest {
         newReferenceList.add(r2);
         newReferenceList.add(r3);
 
-        ArticleReference article = new ArticleReference("Allen,James","Construccion de la zona de cultivo",
-                LocalDate.of(2004,04,04),"aa",userM,"Educacion","55","3","214-226");
+        ArticleReference article = new ArticleReference("Allen,James",
+                "Construccion de la zona de cultivo", LocalDate.of(2004,04,04),
+                "aa",userM,"Educacion","55","3","214-226");
 
         List<Reference> updateReferenceList = new ArrayList<>();
 
@@ -58,7 +58,6 @@ public class SyncTest {
         deleteReferenceList.add(44);
 
         List<Reference> listSync  = syncService.sync(newReferenceList,updateReferenceList,deleteReferenceList,userM.getId());
-
     }
 }
 

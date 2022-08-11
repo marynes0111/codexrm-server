@@ -1,9 +1,8 @@
-package io.github.codexrm.server.Component;
+package io.github.codexrm.server.component;
 
-import io.github.codexrm.server.Model.*;
+import io.github.codexrm.server.model.*;
 import io.github.codexrm.server.dto.*;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +12,10 @@ import java.util.List;
 @Component
 public class DTOConverter {
 
-
     private final ModelMapper modelMapper;
 
     @Autowired
     public DTOConverter(ModelMapper modelMapper) {this.modelMapper = modelMapper;}
-
 
     //Reference
     public ReferenceDTO toReferenceDTO(final Reference reference) {
@@ -40,7 +37,6 @@ public class DTOConverter {
         }else{
             return modelMapper.map(reference,ThesisReferenceDTO.class);
         }
-
     }
 
     public Reference toReference(final ReferenceDTO referenceDTO) {
@@ -88,13 +84,6 @@ public class DTOConverter {
         );
         return userDTOList;
     }
-    public List<User> toUserList(final List<UserDTO> userDTOList) {
-        List<User> userList = new ArrayList<>();
-        userDTOList.forEach(userDTO ->
-                userList.add(toUser(userDTO))
-        );
-        return userList;
-    }
 
     public UserDTO toUserDTO(final User user) {
         return modelMapper.map(user, UserDTO.class);
@@ -103,5 +92,4 @@ public class DTOConverter {
     public User toUser(final UserDTO userDTO) {
         return modelMapper.map(userDTO, User.class);
     }
-
 }

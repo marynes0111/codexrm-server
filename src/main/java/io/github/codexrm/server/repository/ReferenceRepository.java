@@ -1,7 +1,7 @@
-package io.github.codexrm.server.Repository;
+package io.github.codexrm.server.repository;
 
-import io.github.codexrm.server.Model.Reference;
-import io.github.codexrm.server.Model.User;
+import io.github.codexrm.server.model.Reference;
+import io.github.codexrm.server.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

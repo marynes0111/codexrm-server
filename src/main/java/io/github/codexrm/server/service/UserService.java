@@ -1,7 +1,7 @@
 package io.github.codexrm.server.service;
 
-import io.github.codexrm.server.Model.User;
-import io.github.codexrm.server.Repository.UserRepository;
+import io.github.codexrm.server.model.User;
+import io.github.codexrm.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,6 @@ public class UserService {
 
     @Autowired
     public UserService(final UserRepository userRepository) {this.userRepository = userRepository;}
-
 
     public List<User> findAll() {
         return userRepository.findAll();
