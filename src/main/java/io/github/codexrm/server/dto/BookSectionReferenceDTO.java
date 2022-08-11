@@ -9,8 +9,8 @@ public class BookSectionReferenceDTO extends  BookReferenceDTO{
 
     public BookSectionReferenceDTO() {}
 
-    public BookSectionReferenceDTO(String author, String title, LocalDate date, String note, Integer id, String publisher, String volume, String series, String address, String edition, String chapter, String pages) {
-        super(author, title, date, note, id, publisher, volume, series, address, edition);
+    public BookSectionReferenceDTO(String author, String title, LocalDate date, String note, Integer id, UserDTO userId, String publisher, String volume, String series, String address, String edition, String chapter, String pages) {
+        super(author, title, date, note, id, userId, publisher, volume, series, address, edition);
         this.chapter = chapter;
         this.pages = pages;
     }

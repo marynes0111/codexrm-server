@@ -12,8 +12,8 @@ public class BookReferenceDTO extends ReferenceDTO{
 
     public BookReferenceDTO() {}
 
-    public BookReferenceDTO(String author, String title, LocalDate date, String note, Integer id, String publisher, String volume, String series, String address, String edition) {
-        super(author, title, date, note, id);
+    public BookReferenceDTO(String author, String title, LocalDate date, String note, Integer id, UserDTO userId, String publisher, String volume, String series, String address, String edition) {
+        super(author, title, date, note, id, userId);
         this.publisher = publisher;
         this.volume = volume;
         this.series = series;

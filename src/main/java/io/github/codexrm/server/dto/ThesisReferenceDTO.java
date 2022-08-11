@@ -1,6 +1,5 @@
 package io.github.codexrm.server.dto;
 
-
 import java.time.LocalDate;
 
 public class ThesisReferenceDTO extends ReferenceDTO{
@@ -11,8 +10,8 @@ public class ThesisReferenceDTO extends ReferenceDTO{
 
     public ThesisReferenceDTO() {}
 
-    public ThesisReferenceDTO(String author, String title, LocalDate date, String note, Integer id, String school, String type, String address) {
-        super(author, title, date, note, id);
+    public ThesisReferenceDTO(String author, String title, LocalDate date, String note, Integer id, UserDTO userId, String school, String type, String address) {
+        super(author, title, date, note, id, userId);
         this.school = school;
         this.type = type;
         this.address = address;

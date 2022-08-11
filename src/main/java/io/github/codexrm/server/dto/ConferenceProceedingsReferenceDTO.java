@@ -5,15 +5,15 @@ import java.time.LocalDate;
 public class ConferenceProceedingsReferenceDTO extends ReferenceDTO{
 
     private String volume;
-    private String serie;
+    private String series;
     private String address;
 
     public ConferenceProceedingsReferenceDTO() {}
 
-    public ConferenceProceedingsReferenceDTO(String author, String title, LocalDate date, String note, Integer id, String volume, String serie, String address) {
-        super(author, title, date, note, id);
+    public ConferenceProceedingsReferenceDTO(String author, String title, LocalDate date, String note, Integer id, UserDTO userId, String volume, String series, String address) {
+        super(author, title, date, note, id, userId);
         this.volume = volume;
-        this.serie = serie;
+        this.series = series;
         this.address = address;
     }
 
@@ -26,11 +26,11 @@ public class ConferenceProceedingsReferenceDTO extends ReferenceDTO{
     }
 
     public String getSerie() {
-        return serie;
+        return series;
     }
 
-    public void setSerie(String serie) {
-        this.serie = serie;
+    public void setSeries(String series) {
+        this.series = series;
     }
 
     public String getAddress() {

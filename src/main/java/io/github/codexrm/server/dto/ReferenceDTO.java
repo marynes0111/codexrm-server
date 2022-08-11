@@ -20,15 +20,17 @@ public class ReferenceDTO {
     protected LocalDate date;
     protected String note;
     protected Integer id;
+    protected UserDTO userId;
 
     public ReferenceDTO() {}
 
-    public ReferenceDTO(String author, String title, LocalDate date, String note, Integer id) {
+    public ReferenceDTO(String author, String title, LocalDate date, String note, Integer id, UserDTO userId) {
         this.author = author;
         this.title = title;
         this.date = date;
         this.note = note;
         this.id = id;
+        this.userId = userId;
     }
 
     public String getAuthor() {
@@ -89,4 +91,8 @@ public class ReferenceDTO {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public UserDTO getUserId() {return userId;}
+
+    public void setUserId(UserDTO userId) {this.userId = userId;}
 }

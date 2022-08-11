@@ -11,8 +11,8 @@ public class ArticleReferenceDTO extends ReferenceDTO {
 
     public ArticleReferenceDTO() {}
 
-    public ArticleReferenceDTO(String author, String title, LocalDate date, String note, Integer id, String journal, String volume, String number, String pages) {
-        super(author, title, date, note, id);
+    public ArticleReferenceDTO(String author, String title, LocalDate date, String note, Integer id, UserDTO userId, String journal, String volume, String number, String pages) {
+        super(author, title, date, note, id, userId);
         this.journal = journal;
         this.volume = volume;
         this.number = number;

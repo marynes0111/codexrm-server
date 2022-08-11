@@ -1,22 +1,12 @@
 package io.github.codexrm.server.Model;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "reference")
-@XmlRootElement
-@NamedQueries({
-        @NamedQuery(name = "Reference.findAll", query = "select r from Reference r"),
-        @NamedQuery(name = "Reference.findById", query = "select r from Reference r where r.id = :id"),
-        @NamedQuery(name = "Reference.existsById", query = "select (count(r) > 0) from Reference r where r.id = :id"),
-        @NamedQuery(name = "Reference.deleteById", query = "delete from Reference r where r.id = :id"),
-        @NamedQuery(name = "Reference.updateById", query = "update Reference r set  where r.id = :id")
-})
-public class Reference implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Reference {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -34,78 +24,41 @@ public class Reference implements Serializable {
     @Column(name = "note")
     private String note;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userid", nullable = false)
-    private User userId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userid")
+    private User userid;
 
     public Reference() {}
 
-    public Reference(Integer id, String author, String title, LocalDate date, String note, User userId) {
-        this.id = id;
+    public Reference(String author, String title, LocalDate date, String note, User userid) {
         this.author = author;
         this.title = title;
         this.date = date;
         this.note = note;
-        this.userId = userId;
+        this.userid = userid;
     }
 
-    public User getUserId() {
-        return userId;
-    }
+    public Integer getId() {return id;}
 
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
+    public void setId(Integer id) {this.id = id;}
 
-    public String getNote() {
-        return note;
-    }
+    public String getAuthor() {return author;}
 
-    public void setNote(String note) {
-        this.note = note;
-    }
+    public void setAuthor(String author) {this.author = author;}
 
-    public LocalDate getDate() {
-        return date;
-    }
+    public String getTitle() {return title;}
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+    public void setTitle(String title) {this.title = title;}
 
-    public String getTitle() {
-        return title;
-    }
+    public LocalDate getDate() {return date;}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setDate(LocalDate date) {this.date = date;}
 
-    public String getAuthor() {
-        return author;
-    }
+    public String getNote() {return note;}
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+    public void setNote(String note) {this.note = note;}
 
-    public Integer getId() {
-        return id;
-    }
+    public User getUserid() {return userid;}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Reference{" +
-                "id=" + id +
-                ", author='" + author + '\'' +
-                ", title='" + title + '\'' +
-                ", date=" + date +
-                ", note='" + note + '\'' +
-                ", userId=" + userId +
-                '}';
-    }
+    public void setUserid(User userid) {this.userid = userid;}
 }
