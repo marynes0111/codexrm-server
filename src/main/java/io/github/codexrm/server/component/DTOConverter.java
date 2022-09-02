@@ -61,6 +61,7 @@ public class DTOConverter {
     }
 
     public List<ReferenceDTO> toReferenceDTOList(final List<Reference> referenceList) {
+
         List<ReferenceDTO> referenceDTOList = new ArrayList<>();
         referenceList.forEach(reference ->
                 referenceDTOList.add(toReferenceDTO(reference))
@@ -69,6 +70,7 @@ public class DTOConverter {
     }
 
     public List<Reference> toReferenceList(final List<ReferenceDTO> referenceDTOList) {
+
         List<Reference> referenceList = new ArrayList<>();
         referenceDTOList.forEach(referenceDTO ->
                 referenceList.add(toReference(referenceDTO))
@@ -78,6 +80,7 @@ public class DTOConverter {
 
     //User
     public List<UserDTO> toUserDTOList(final List<User> userList) {
+
         List<UserDTO> userDTOList = new ArrayList<>();
         userList.forEach(user ->
                 userDTOList.add(toUserDTO(user))

@@ -8,17 +8,17 @@ import java.time.LocalDate;
 public class BookLetReference extends Reference{
 
 
-    @Column(name = "howpublisher")
-    private String howpublisher;
+    @Column(name = "howpublished")
+    private String howpublished;
 
     @Column(name = "address")
     private String address;
 
     public BookLetReference() {}
 
-    public BookLetReference(String author, String title, LocalDate date, String note, User userId, String howpublisher, String address) {
+    public BookLetReference(String author, String title, LocalDate date, String note, User userId, String howpublished, String address) {
         super(author, title, date, note, userId);
-        this.howpublisher = howpublisher;
+        this.howpublished = howpublished;
         this.address = address;
     }
 
@@ -26,7 +26,7 @@ public class BookLetReference extends Reference{
 
     public void setAddress(String address) {this.address = address;}
 
-    public String getHowpublisher() {return howpublisher;}
+    public String getHowpublished() {return howpublished;}
 
-    public void setHowpublisher(String howpublisher) {this.howpublisher = howpublisher;}
+    public void setHowpublished(String howpublished) {this.howpublished = howpublished;}
 }

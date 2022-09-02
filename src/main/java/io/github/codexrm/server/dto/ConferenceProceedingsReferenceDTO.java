@@ -25,7 +25,7 @@ public class ConferenceProceedingsReferenceDTO extends ReferenceDTO{
         this.volume = volume;
     }
 
-    public String getSerie() {
+    public String getSeries() {
         return series;
     }
 

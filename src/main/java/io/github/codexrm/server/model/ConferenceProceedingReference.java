@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "conferenceproceedings")
+@Table(name = "conferenceproceedingsreference")
 public class ConferenceProceedingReference extends Reference {
 
     @Column(name = "volume")

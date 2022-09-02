@@ -20,6 +20,11 @@ class ReferenceTest {
     UserService userService;
 
     @Test
+    void deleteReference() {
+
+        referenceService.deleteAll(userService.findById(1));
+    }
+    @Test
     void testReferenceServiceCRUD() {
         User userM = userService.findById(12);
         User userL = userService.findById(13);
