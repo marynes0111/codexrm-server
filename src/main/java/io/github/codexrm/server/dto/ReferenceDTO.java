@@ -12,6 +12,8 @@ import java.time.LocalDate;
         @JsonSubTypes.Type(value = BookSectionReferenceDTO.class, name = "bookSectionDTO"),
         @JsonSubTypes.Type(value = ThesisReferenceDTO.class, name = "thesisDTO"),
         @JsonSubTypes.Type(value = BookLetReferenceDTO.class, name = "bookLetDTO"),
+        @JsonSubTypes.Type(value = ConferencePaperReferenceDTO.class, name = "paperDTO"),
+        @JsonSubTypes.Type(value = WebPageReferenceDTO.class, name = "webPageDTO"),
         @JsonSubTypes.Type(value = ConferenceProceedingsReferenceDTO.class, name = "proceedingsDTO")})
 public class ReferenceDTO {
 
@@ -54,7 +56,7 @@ public class ReferenceDTO {
         return date;
     }
 
-    @JsonIgnore
+
     public void setLocalDate(LocalDate date) {
         this.date = date;
     }

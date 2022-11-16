@@ -34,9 +34,15 @@ public class DTOConverter {
         }
         else if(reference.getClass() == ConferenceProceedingReference.class){
             return modelMapper.map(reference,ConferenceProceedingsReferenceDTO.class);
-        }else{
-            return modelMapper.map(reference,ThesisReferenceDTO.class);
         }
+        else if(reference.getClass() == ConferencePaperReference.class) {
+            return modelMapper.map(reference,ConferencePaperReferenceDTO.class);
+        }
+        else if(reference.getClass() == WebPageReference.class) {
+            return modelMapper.map(reference,WebPageReferenceDTO.class);
+        }
+        else
+            return modelMapper.map(reference,ThesisReferenceDTO.class);
     }
 
     public Reference toReference(final ReferenceDTO referenceDTO) {
@@ -55,7 +61,14 @@ public class DTOConverter {
         }
         else if(referenceDTO.getClass() == ConferenceProceedingsReferenceDTO.class){
             return modelMapper.map(referenceDTO,ConferenceProceedingReference.class);
-        }else{
+        }
+        else if(referenceDTO.getClass() == ConferencePaperReferenceDTO.class){
+            return modelMapper.map(referenceDTO,ConferencePaperReference.class);
+        }
+        else if(referenceDTO.getClass() == WebPageReferenceDTO.class){
+            return modelMapper.map(referenceDTO,WebPageReference.class);
+        }
+        else{
             return modelMapper.map(referenceDTO,ThesisReference.class);
         }
     }
