@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ReferenceRepository extends JpaRepository<Reference, Integer> {
-        List<Reference> findByUserid(User userid);
+        List<Reference> findByUser(User user);
+        List<Reference> findByAuthorAndUser(String author, User user);
+        List<Reference> findByTitleAndUser(String title, User user);
 }

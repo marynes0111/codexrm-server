@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,12 +23,27 @@ class ReferenceTest {
     @Test
     void deleteReference() {
 
-        referenceService.deleteAll(userService.findById(1));
+        referenceService.deleteAll(userService.findById("marynes"));
     }
+
+    @Test
+    void getByAuthor() {
+
+       ArrayList<Reference> l = (ArrayList<Reference>) referenceService.findByAuthor("maria", userService.findById("mary"));
+    int a =1;
+    }
+
+    @Test
+    void getByTitle() {
+
+        ArrayList<Reference> l = (ArrayList<Reference>)  referenceService.findByTitle("fe",userService.findById("mary"));
+        int a =1;
+    }
+
     @Test
     void testReferenceServiceCRUD() {
-        User userM = userService.findById(12);
-        User userL = userService.findById(13);
+        User userM = userService.findById("marynes");
+        User userL = userService.findById("luis");
 
         ArticleReference article = new ArticleReference("Allen,James","Construccion de la zona de cultivo",
                 LocalDate.of(2004,04,04),"aa",userM,"Educacion","55","3","214-226");

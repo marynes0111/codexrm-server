@@ -33,7 +33,7 @@ public class SyncController {
             List <Reference> newReferenceList = (List<Reference>) dtoConverter.toReferenceList(referenceLibrary.getNewReferencesList());
             List <Reference> updateReferenceList = (List<Reference>) dtoConverter.toReferenceList(referenceLibrary.getUpdatedReferencesList());
 
-            List<ReferenceDTO> referenceDTOList = (List<ReferenceDTO>) dtoConverter.toReferenceDTOList(syncService.sync(newReferenceList,updateReferenceList,referenceLibrary.getDeletedReferencesList(),referenceLibrary.getUserId()));
+            List<ReferenceDTO> referenceDTOList = (List<ReferenceDTO>) dtoConverter.toReferenceDTOList(syncService.sync(newReferenceList,updateReferenceList,referenceLibrary.getDeletedReferencesList(),referenceLibrary.getUsername()));
            return new ResponseEntity<>(referenceDTOList, HttpStatus.OK);
     }
 }

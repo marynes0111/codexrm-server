@@ -8,7 +8,7 @@ public class ReferenceLibraryDTO {
     private List<ReferenceDTO> newReferencesList;
     private List<ReferenceDTO> updatedReferencesList;
     private List<Integer> deletedReferencesList;
-    private Integer userId;
+    private String username;
 
     public ReferenceLibraryDTO() {
         this.newReferencesList = new ArrayList<>();
@@ -16,11 +16,11 @@ public class ReferenceLibraryDTO {
         this.deletedReferencesList = new ArrayList<>();
     }
 
-    public ReferenceLibraryDTO(List<ReferenceDTO> newReferencesList, List<ReferenceDTO> updatedReferencesList, List<Integer> deletedReferencesList, Integer userId) {
+    public ReferenceLibraryDTO(List<ReferenceDTO> newReferencesList, List<ReferenceDTO> updatedReferencesList, List<Integer> deletedReferencesList, String username) {
         this.newReferencesList = newReferencesList;
         this.updatedReferencesList = updatedReferencesList;
         this.deletedReferencesList = deletedReferencesList;
-        this.userId = userId;
+        this.username = username;
     }
 
     public List<ReferenceDTO> getNewReferencesList() {
@@ -47,11 +47,7 @@ public class ReferenceLibraryDTO {
         this.deletedReferencesList.add(deletedReference);
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
+    public String getUsername() { return username; }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+    public void setUsername(String username) { this.username = username; }
 }

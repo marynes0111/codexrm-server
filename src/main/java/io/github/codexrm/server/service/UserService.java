@@ -21,25 +21,24 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findById(Integer id) {return userRepository.findById(id).get();}
+    public User findById(String username) {return userRepository.findById(username).get();}
 
     public User save(User user) {
-        if (user.getId() != null && userRepository.existsById(user.getId())) {
+        if (user.getUsername() != null && userRepository.existsById(user.getUsername())) {
             throw new EntityExistsException("There is already existing entity with such ID in the database.");
         }
         return userRepository.save(user);
     }
 
     public User update(User user) {
-        return userRepository.findById(user.getId()).map(userFound -> {
-            userFound.setUserCodex(user.getUserCodex());
+        return userRepository.findById(user.getUsername()).map(userFound -> {
             userFound.setPassword(user.getPassword());
             return userRepository.save(userFound);
-        }).orElseThrow(() -> new EntityNotFoundException("UserId " + user.getId() + " not found"));
+        }).orElseThrow(() -> new EntityNotFoundException("Username " + user.getUsername() + " not found"));
     }
 
-    public void delete(Integer id) {
-        userRepository.deleteById(id);
+    public void delete(String username) {
+        userRepository.deleteById(username);
     }
 
     public void deleteAll() {userRepository.deleteAll();}

@@ -20,13 +20,15 @@ public class ReferenceService {
         this.referenceRepository = referenceRepository;
     }
 
-    public List<Reference> findAll(User userId) {
-        return referenceRepository.findByUserid(userId);
-    }
+    public List<Reference> findAll(User user) { return referenceRepository.findByUser(user); }
 
     public Reference findById(Integer id) {
         return referenceRepository.findById(id).get();
     }
+
+    public List<Reference> findByAuthor(String author, User user) { return referenceRepository.findByAuthorAndUser(author, user); }
+
+    public List<Reference> findByTitle(String title, User user) { return referenceRepository.findByTitleAndUser(title, user); }
 
     public Reference save(Reference reference) {
         if (reference.getId() != null && referenceRepository.existsById(reference.getId())) {
@@ -39,17 +41,14 @@ public class ReferenceService {
         if (reference.getId() != null && !referenceRepository.existsById(reference.getId())) {
             throw new EntityNotFoundException("There is no entity with such ID in the database.");
         }
-        if (reference.getUserid().getId() != findById(reference.getId()).getUserid().getId()) {
-            throw new EntityExistsException("There is  entity with such User ID in the database.");
-        }
 
         return referenceRepository.save(reference);
     }
 
     public void delete(Integer id) {referenceRepository.deleteById(id);}
 
-    public void deleteAll(User userId) {
-        List<Reference> list = findAll(userId);
+    public void deleteAll(User user) {
+        List<Reference> list = findAll(user);
         for (Reference reference:list){
             delete(reference.getId());
         }

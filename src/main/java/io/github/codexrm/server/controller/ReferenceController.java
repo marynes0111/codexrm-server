@@ -1,6 +1,8 @@
 package io.github.codexrm.server.controller;
 
 import io.github.codexrm.server.component.DTOConverter;
+import io.github.codexrm.server.dto.AuthorAndUserDTO;
+import io.github.codexrm.server.dto.TitleAndUserDTO;
 import io.github.codexrm.server.dto.UserDTO;
 import io.github.codexrm.server.model.Reference;
 import io.github.codexrm.server.model.User;
@@ -26,7 +28,7 @@ public class ReferenceController {
         this.dtoConverter = dtoConverter;
     }
 
-    @GetMapping("/getAll")
+    @PostMapping("/getAll")
     public ResponseEntity<List<ReferenceDTO>> getAll(@RequestBody final UserDTO userDTO){
         User user = dtoConverter.toUser(userDTO);
         List<ReferenceDTO> referenceDTOList = dtoConverter.toReferenceDTOList(referenceService.findAll(user));
@@ -35,13 +37,25 @@ public class ReferenceController {
 
     @GetMapping("/getById/{id}")
     public ResponseEntity<ReferenceDTO> getById(@PathVariable final Integer id){
-        ReferenceDTO referenceDTO = dtoConverter.toReferenceDTO(referenceService.findById(id));
+         ReferenceDTO referenceDTO = dtoConverter.toReferenceDTO(referenceService.findById(id));
         return ResponseEntity.ok().body(referenceDTO);
+    }
+
+    @PostMapping("/getByAuthor")
+    public ResponseEntity<List<ReferenceDTO>> getByAuthor(@RequestBody final AuthorAndUserDTO authorAndUser){
+        List<ReferenceDTO> referenceDTOList = dtoConverter.toReferenceDTOList(referenceService.findByAuthor(authorAndUser.getAuthor(),authorAndUser.getUser()));
+        return ResponseEntity.ok().body(referenceDTOList);
+    }
+
+    @PostMapping("/getByTitle")
+    public ResponseEntity<List<ReferenceDTO>> getByTitle(@RequestBody final TitleAndUserDTO titleAndUser){
+        List<ReferenceDTO> referenceDTOList = dtoConverter.toReferenceDTOList(referenceService.findByTitle(titleAndUser.getTitle(),titleAndUser.getUser()));
+        return ResponseEntity.ok().body(referenceDTOList);
     }
 
     @PostMapping("/add")
     public ResponseEntity<ReferenceDTO> add(@RequestBody final ReferenceDTO referenceDTO){
-        Reference reference = dtoConverter.toReference(referenceDTO);
+        Reference reference = dtoConverter.createReference(referenceDTO);
         ReferenceDTO referenceDTOAdded = dtoConverter.toReferenceDTO(referenceService.save(reference));
         return new ResponseEntity<>(referenceDTOAdded, HttpStatus.CREATED);
     }
@@ -56,6 +70,12 @@ public class ReferenceController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable final Integer id) {
         referenceService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/deleteAll")
+    public ResponseEntity<?> delete(@RequestBody final UserDTO userDTO) {
+        referenceService.deleteAll(dtoConverter.toUser(userDTO));
         return ResponseEntity.ok().build();
     }
 }

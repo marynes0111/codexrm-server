@@ -30,9 +30,9 @@ public class UserController {
         return ResponseEntity.ok().body(userDTOList);
     }
 
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<UserDTO> getById(@PathVariable final Integer id){
-        UserDTO userDTO = dtoConverter.toUserDTO(userService.findById(id));
+    @GetMapping("/getByUsername/{username}")
+    public ResponseEntity<UserDTO> getByUsername(@PathVariable final String username){
+        UserDTO userDTO = dtoConverter.toUserDTO(userService.findById(username));
         return ResponseEntity.ok().body(userDTO);
     }
 
@@ -50,9 +50,9 @@ public class UserController {
         return new ResponseEntity<>(userDTOUpdated, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable final Integer id) {
-        userService.delete(id);
+    @DeleteMapping("/delete/{username}")
+    public ResponseEntity<?> delete(@PathVariable final String username) {
+        userService.delete(username);
         return ResponseEntity.ok().build();
     }
 }

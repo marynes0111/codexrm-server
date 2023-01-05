@@ -1,6 +1,7 @@
 package io.github.codexrm.server.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.github.codexrm.server.model.User;
 
 import java.time.LocalDate;
 
@@ -11,8 +12,14 @@ public class WebPageReferenceDTO extends ReferenceDTO {
 
     public WebPageReferenceDTO() {}
 
-    public WebPageReferenceDTO(String author, String title, LocalDate date, String note, Integer id, UserDTO userId, String url, LocalDate accessDate) {
-        super(author, title, date, note, id, userId);
+    public WebPageReferenceDTO(String author, String title, LocalDate date, String note, Integer id, User user, String url, LocalDate accessDate) {
+        super(author, title, date, note, id, user);
+        this.url = url;
+        this.accessDate = accessDate;
+    }
+
+    public WebPageReferenceDTO(String author, String title, LocalDate date, String note, User user, String url, LocalDate accessDate) {
+        super(author, title, date, note, user);
         this.url = url;
         this.accessDate = accessDate;
     }

@@ -25,17 +25,17 @@ public class Reference {
     private String note;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userid")
-    private User userid;
+    @JoinColumn(name = "usercodex")
+    private User user;
 
     public Reference() {}
 
-    public Reference(String author, String title, LocalDate date, String note, User userid) {
+    public Reference(String author, String title, LocalDate date, String note, User user) {
         this.author = author;
         this.title = title;
         this.date = date;
         this.note = note;
-        this.userid = userid;
+        this.user = user;
     }
 
     public Integer getId() {return id;}
@@ -58,7 +58,7 @@ public class Reference {
 
     public void setNote(String note) {this.note = note;}
 
-    public User getUserid() {return userid;}
+    public User getUser() { return user; }
 
-    public void setUserid(User userid) {this.userid = userid;}
+    public void setUser(User user) { this.user = user; }
 }

@@ -1,5 +1,7 @@
 package io.github.codexrm.server.dto;
 
+import io.github.codexrm.server.model.User;
+
 import java.time.LocalDate;
 
 public class ConferencePaperReferenceDTO extends ReferenceDTO{
@@ -11,8 +13,16 @@ public class ConferencePaperReferenceDTO extends ReferenceDTO{
 
     public ConferencePaperReferenceDTO() {}
 
-    public ConferencePaperReferenceDTO(String author, String title, LocalDate date, String note, Integer id, UserDTO userId, String publisher, String volume, String address, String pages) {
-        super(author, title, date, note, id, userId);
+    public ConferencePaperReferenceDTO(String author, String title, LocalDate date, String note, Integer id, User user, String publisher, String volume, String address, String pages) {
+        super(author, title, date, note, id, user);
+        this.publisher = publisher;
+        this.volume = volume;
+        this.address = address;
+        this.pages = pages;
+    }
+
+    public ConferencePaperReferenceDTO(String author, String title, LocalDate date, String note, User user, String publisher, String volume, String address, String pages) {
+        super(author, title, date, note, user);
         this.publisher = publisher;
         this.volume = volume;
         this.address = address;

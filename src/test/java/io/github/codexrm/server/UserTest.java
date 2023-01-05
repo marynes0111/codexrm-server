@@ -25,16 +25,15 @@ class UserTest {
         User userBSaved = userService.save(userB);
         User userCSaved = userService.save(userC);
 
-        User userAFound = userService.findById(userASaved.getId());
-        userAFound.setUserCodex("mary");
+        User userAFound = userService.findById(userASaved.getUsername());
+        userAFound.setPassword("mary");
 
         User userAUpdated = userService.update(userAFound);
 
-        User userD = userService.findById(userAFound.getId());
-        assertEquals("mary", userD.getUserCodex());
-        assertEquals("123", userD.getPassword());
+        User userD = userService.findById(userAFound.getUsername());
+        assertEquals("mary", userD.getPassword());
 
-        userService.delete(userD.getId());
+        userService.delete(userD.getUsername());
 
        assertEquals(2, userService.findAll().size());
     }
