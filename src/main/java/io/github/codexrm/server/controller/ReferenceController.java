@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/Reference")
@@ -60,6 +61,13 @@ public class ReferenceController {
         return new ResponseEntity<>(referenceDTOAdded, HttpStatus.CREATED);
     }
 
+    @PostMapping("/addGroup")
+    public ResponseEntity<List<ReferenceDTO>> addGroup(@RequestBody final ArrayList<ReferenceDTO> referenceDTOList){
+       List <Reference> referenceList = dtoConverter.createReferenceList(referenceDTOList);
+       List<ReferenceDTO> savedReferenceDTOList = (List<ReferenceDTO>) dtoConverter.toReferenceDTO((Reference) referenceService.saveGroup(referenceList));
+       return new ResponseEntity<>(savedReferenceDTOList, HttpStatus.CREATED);
+    }
+
     @PutMapping("/update")
     public ResponseEntity<ReferenceDTO> update( @RequestBody final ReferenceDTO referenceDTO){
         Reference reference = dtoConverter.toReference(referenceDTO);
@@ -78,4 +86,10 @@ public class ReferenceController {
         referenceService.deleteAll(dtoConverter.toUser(userDTO));
         return ResponseEntity.ok().build();
     }
+    @PostMapping("/deleteGroup")
+    public ResponseEntity<?> deleteGroup(@RequestBody final ArrayList<Integer> idList) {
+        referenceService.deleteGroup(idList);
+        return ResponseEntity.ok().build();
+    }
+
 }

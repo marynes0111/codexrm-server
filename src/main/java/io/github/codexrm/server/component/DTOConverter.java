@@ -94,6 +94,15 @@ public class DTOConverter {
         return referenceList;
     }
 
+    public List<Reference> createReferenceList(final List<ReferenceDTO> referenceDTOList) {
+
+        List<Reference> referenceList = new ArrayList<>();
+        referenceDTOList.forEach(referenceDTO ->
+                referenceList.add(createReference(referenceDTO))
+        );
+        return referenceList;
+    }
+
     public Reference createReference(final ReferenceDTO referenceDTO) {
 
 

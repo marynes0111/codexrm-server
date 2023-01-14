@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,6 +38,16 @@ public class ReferenceService {
         return referenceRepository.save(reference);
     }
 
+    public List<Reference> saveGroup(List <Reference> referenceList) {
+        for(Reference reference : referenceList){
+            if (reference.getId() != null && referenceRepository.existsById(reference.getId())) {
+                throw new EntityExistsException("There is already existing entity with such ID in the database.");
+            }
+        }
+
+        return referenceRepository.saveAll(referenceList);
+    }
+
     public Reference update(Reference reference) {
         if (reference.getId() != null && !referenceRepository.existsById(reference.getId())) {
             throw new EntityNotFoundException("There is no entity with such ID in the database.");
@@ -51,6 +62,12 @@ public class ReferenceService {
         List<Reference> list = findAll(user);
         for (Reference reference:list){
             delete(reference.getId());
+        }
+    }
+
+    public void deleteGroup(ArrayList<Integer> idList) {
+        for (Integer id :idList){
+            delete(id);
         }
     }
 }
