@@ -38,16 +38,6 @@ public class ReferenceService {
         return referenceRepository.save(reference);
     }
 
-    public List<Reference> saveGroup(List <Reference> referenceList) {
-        for(Reference reference : referenceList){
-            if (reference.getId() != null && referenceRepository.existsById(reference.getId())) {
-                throw new EntityExistsException("There is already existing entity with such ID in the database.");
-            }
-        }
-
-        return referenceRepository.saveAll(referenceList);
-    }
-
     public Reference update(Reference reference) {
         if (reference.getId() != null && !referenceRepository.existsById(reference.getId())) {
             throw new EntityNotFoundException("There is no entity with such ID in the database.");

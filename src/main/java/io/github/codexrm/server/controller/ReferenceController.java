@@ -61,13 +61,6 @@ public class ReferenceController {
         return new ResponseEntity<>(referenceDTOAdded, HttpStatus.CREATED);
     }
 
-    @PostMapping("/addGroup")
-    public ResponseEntity<List<ReferenceDTO>> addGroup(@RequestBody final ArrayList<ReferenceDTO> referenceDTOList){
-       List <Reference> referenceList = dtoConverter.createReferenceList(referenceDTOList);
-       List<ReferenceDTO> savedReferenceDTOList = (List<ReferenceDTO>) dtoConverter.toReferenceDTO((Reference) referenceService.saveGroup(referenceList));
-       return new ResponseEntity<>(savedReferenceDTOList, HttpStatus.CREATED);
-    }
-
     @PutMapping("/update")
     public ResponseEntity<ReferenceDTO> update( @RequestBody final ReferenceDTO referenceDTO){
         Reference reference = dtoConverter.toReference(referenceDTO);
