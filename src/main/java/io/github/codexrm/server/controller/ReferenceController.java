@@ -1,8 +1,8 @@
 package io.github.codexrm.server.controller;
 
 import io.github.codexrm.server.component.DTOConverter;
-import io.github.codexrm.server.dto.AuthorAndUserDTO;
-import io.github.codexrm.server.dto.TitleAndUserDTO;
+import io.github.codexrm.server.dto.UserPageDTO;
+import io.github.codexrm.server.dto.PageDTO;
 import io.github.codexrm.server.dto.UserDTO;
 import io.github.codexrm.server.model.Reference;
 import io.github.codexrm.server.model.User;
@@ -40,18 +40,6 @@ public class ReferenceController {
     public ResponseEntity<ReferenceDTO> getById(@PathVariable final Integer id){
          ReferenceDTO referenceDTO = dtoConverter.toReferenceDTO(referenceService.findById(id));
         return ResponseEntity.ok().body(referenceDTO);
-    }
-
-    @PostMapping("/getByAuthor")
-    public ResponseEntity<List<ReferenceDTO>> getByAuthor(@RequestBody final AuthorAndUserDTO authorAndUser){
-        List<ReferenceDTO> referenceDTOList = dtoConverter.toReferenceDTOList(referenceService.findByAuthor(authorAndUser.getAuthor(),authorAndUser.getUser()));
-        return ResponseEntity.ok().body(referenceDTOList);
-    }
-
-    @PostMapping("/getByTitle")
-    public ResponseEntity<List<ReferenceDTO>> getByTitle(@RequestBody final TitleAndUserDTO titleAndUser){
-        List<ReferenceDTO> referenceDTOList = dtoConverter.toReferenceDTOList(referenceService.findByTitle(titleAndUser.getTitle(),titleAndUser.getUser()));
-        return ResponseEntity.ok().body(referenceDTOList);
     }
 
     @PostMapping("/add")

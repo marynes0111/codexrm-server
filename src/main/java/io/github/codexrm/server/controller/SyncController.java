@@ -28,12 +28,12 @@ public class SyncController {
         this.dtoConverter = dtoConverter;
     }
 
-    @PostMapping("/syncTable")
+   /* @PostMapping("/syncTable")
     public ResponseEntity<List<ReferenceDTO>> syncTable(@RequestBody final ReferenceLibraryDTO referenceLibrary) {
             List <Reference> newReferenceList = (List<Reference>) dtoConverter.toReferenceList(referenceLibrary.getNewReferencesList());
             List <Reference> updateReferenceList = (List<Reference>) dtoConverter.toReferenceList(referenceLibrary.getUpdatedReferencesList());
 
             List<ReferenceDTO> referenceDTOList = (List<ReferenceDTO>) dtoConverter.toReferenceDTOList(syncService.sync(newReferenceList,updateReferenceList,referenceLibrary.getDeletedReferencesList(),referenceLibrary.getUsername()));
            return new ResponseEntity<>(referenceDTOList, HttpStatus.OK);
-    }
+    }*/
 }

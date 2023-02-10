@@ -23,27 +23,14 @@ class ReferenceTest {
     @Test
     void deleteReference() {
 
-        referenceService.deleteAll(userService.findById("marynes"));
+        referenceService.deleteAll(userService.get(1));
     }
 
-    @Test
-    void getByAuthor() {
-
-       ArrayList<Reference> l = (ArrayList<Reference>) referenceService.findByAuthor("maria", userService.findById("mary"));
-    int a =1;
-    }
-
-    @Test
-    void getByTitle() {
-
-        ArrayList<Reference> l = (ArrayList<Reference>)  referenceService.findByTitle("fe",userService.findById("mary"));
-        int a =1;
-    }
 
     @Test
     void testReferenceServiceCRUD() {
-        User userM = userService.findById("marynes");
-        User userL = userService.findById("luis");
+        User userM = userService.get(1);
+        User userL = userService.get(2);
 
         ArticleReference article = new ArticleReference("Allen,James","Construccion de la zona de cultivo",
                 LocalDate.of(2004,04,04),"aa",userM,"Educacion","55","3","214-226");

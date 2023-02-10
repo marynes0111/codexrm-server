@@ -21,7 +21,7 @@ class SyncTest {
 
     @Test
     void syncReference() {
-        User userM = userService.findById("marynes");
+        User userM = userService.get(1);
 
        ConferenceProceedingReference r0 = new ConferenceProceedingReference("Urbina,Odri",
                "Impcto economico en el este del pais", LocalDate.of(20021,01,01),
@@ -57,7 +57,7 @@ class SyncTest {
         deleteReferenceList.add(43);
         deleteReferenceList.add(44);
 
-        List<Reference> listSync  = syncService.sync(newReferenceList,updateReferenceList,deleteReferenceList,userM.getUsername());
+    //    List<Reference> listSync  = syncService.sync(newReferenceList,updateReferenceList,deleteReferenceList,userM.getUsername());
     }
 }
 

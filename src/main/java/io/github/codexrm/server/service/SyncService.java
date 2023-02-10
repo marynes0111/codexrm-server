@@ -15,9 +15,9 @@ public class SyncService {
     @Autowired
     private UserService userService;
 
-    public List<Reference> sync(List<Reference> newReferenceList, List<Reference> updateReferenceList, List<Integer> deleteReferenceList, String username) {
+    public List<Reference> sync(List<Reference> newReferenceList, List<Reference> updateReferenceList, List<Integer> deleteReferenceList, Integer idUser) {
 
-        User user = userService.findById(username);
+        User user = userService.get(idUser);
 
         for(Reference reference: newReferenceList){
             referenceService.save(reference);
