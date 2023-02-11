@@ -5,21 +5,21 @@ import java.util.List;
 
 public class UserPageDTO {
 
-    private List<UserDTO> userList;
+    private List<UserDTO> userDTOList;
     private PageDTO pageDTO;
 
     public UserPageDTO() {
-        userList = new ArrayList<>();
+        userDTOList = new ArrayList<>();
     }
 
     public UserPageDTO(List<UserDTO> userList, PageDTO pageDTO) {
-        this.userList = userList;
+        this.userDTOList = userList;
         this.pageDTO = pageDTO;
     }
 
-    public List<UserDTO> getUserList() { return userList; }
+    public List<UserDTO> getUserDTOList() { return userDTOList; }
 
-    public void setUserList(List<UserDTO> userList) { this.userList = userList; }
+    public void setUserDTOList(List<UserDTO> userDTOList) { this.userDTOList = userDTOList; }
 
     public PageDTO getPageDTO() { return pageDTO; }
 

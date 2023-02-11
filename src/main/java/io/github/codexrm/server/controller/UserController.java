@@ -28,7 +28,7 @@ public class UserController {
         this.dtoConverter = dtoConverter;
     }
 
-    @GetMapping("/GetAll")
+    @PostMapping("/GetAll")
     public ResponseEntity<UserPageDTO> getAll(
             @RequestParam(required = false) String username,
             @RequestParam(defaultValue = "0") int page,

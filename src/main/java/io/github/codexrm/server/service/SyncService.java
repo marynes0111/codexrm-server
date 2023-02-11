@@ -15,19 +15,19 @@ public class SyncService {
     @Autowired
     private UserService userService;
 
-    public List<Reference> sync(List<Reference> newReferenceList, List<Reference> updateReferenceList, List<Integer> deleteReferenceList, Integer idUser) {
+   /* public List<Reference> sync(List<Reference> newReferenceList, List<Reference> updateReferenceList, List<Integer> deleteReferenceList, Integer idUser) {
 
         User user = userService.get(idUser);
 
         for(Reference reference: newReferenceList){
-            referenceService.save(reference);
+            referenceService.add(reference);
         }
         for(Reference reference: updateReferenceList){
             referenceService.update(reference);
         }
         for(Integer id: deleteReferenceList){
-            referenceService.delete(id);
+          //  referenceService.delete(id);
         }
-        return referenceService.findAll(user);
-    }
+        //return referenceService.getAll(user);
+    }*/
 }

@@ -1,9 +1,15 @@
 package io.github.codexrm.server.service;
 
+import io.github.codexrm.server.enums.SortReference;
+import io.github.codexrm.server.enums.SortUser;
 import io.github.codexrm.server.model.Reference;
 import io.github.codexrm.server.model.User;
 import io.github.codexrm.server.repository.ReferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -21,17 +27,34 @@ public class ReferenceService {
         this.referenceRepository = referenceRepository;
     }
 
-    public List<Reference> findAll(User user) { return referenceRepository.findByUser(user); }
+    public Page<Reference> getAll(User user, String author, String title, int page, int size, SortReference sort) {
 
-    public Reference findById(Integer id) {
+        Sort.Order order = getOrder(sort);
+        Pageable pagingSort = PageRequest.of(page, size, Sort.by(order));
+
+        if (author == null && title == null) {
+            return referenceRepository.findByUser(user, pagingSort);
+        }
+        else{
+            if(author == null && title != null){
+                return referenceRepository.findByUserAndTitleContaining(user, title, pagingSort);
+            }
+            else{
+                if(author != null && title == null){
+                    return referenceRepository.findByUserAndAuthorContaining(user, author, pagingSort);
+                }
+                else{
+                    return referenceRepository.findByUserAndAuthorContainingOrTitleContaining(user, author,title,pagingSort);
+                }
+            }
+        }
+    }
+
+    public Reference get(Integer id) {
         return referenceRepository.findById(id).get();
     }
 
-    public List<Reference> findByAuthor(String author, User user) { return referenceRepository.findByAuthorAndUser(author, user); }
-
-    public List<Reference> findByTitle(String title, User user) { return referenceRepository.findByTitleAndUser(title, user); }
-
-    public Reference save(Reference reference) {
+    public Reference add(Reference reference) {
         if (reference.getId() != null && referenceRepository.existsById(reference.getId())) {
             throw new EntityExistsException("There is already existing entity with such ID in the database.");
         }
@@ -46,18 +69,49 @@ public class ReferenceService {
         return referenceRepository.save(reference);
     }
 
-    public void delete(Integer id) {referenceRepository.deleteById(id);}
+    public void delete(Integer id) {
 
-    public void deleteAll(User user) {
-        List<Reference> list = findAll(user);
-        for (Reference reference:list){
-            delete(reference.getId());
-        }
+        referenceRepository.deleteById(id);
     }
 
-    public void deleteGroup(ArrayList<Integer> idList) {
-        for (Integer id :idList){
-            delete(id);
+    private Sort.Order getOrder(SortReference sort) {
+
+        if (sort == null) {
+            return new Sort.Order(Sort.Direction.ASC, "id");
+
+        }else {
+            switch (sort) {
+                case idAsc:
+                    return new Sort.Order(Sort.Direction.ASC, "id");
+
+                case idDesc:
+                    return new Sort.Order(Sort.Direction.DESC, "id");
+
+                case authorAsc:
+                    return new Sort.Order(Sort.Direction.ASC, "author");
+
+                case authorDesc:
+                    return new Sort.Order(Sort.Direction.DESC, "author");
+
+                case titleAsc:
+                    return new Sort.Order(Sort.Direction.ASC, "title");
+
+                case titleDesc:
+                    return new Sort.Order(Sort.Direction.DESC, "title");
+
+                case dateAsc:
+                    return new Sort.Order(Sort.Direction.ASC, "date");
+
+                case dateDesc:
+                    return new Sort.Order(Sort.Direction.DESC, "date");
+
+                case noteAsc:
+                    return new Sort.Order(Sort.Direction.ASC, "note");
+
+                default:
+                    return new Sort.Order(Sort.Direction.DESC, "note");
+
+            }
         }
     }
 }
