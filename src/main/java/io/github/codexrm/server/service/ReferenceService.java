@@ -1,7 +1,6 @@
 package io.github.codexrm.server.service;
 
 import io.github.codexrm.server.enums.SortReference;
-import io.github.codexrm.server.enums.SortUser;
 import io.github.codexrm.server.model.Reference;
 import io.github.codexrm.server.model.User;
 import io.github.codexrm.server.repository.ReferenceRepository;
@@ -14,11 +13,13 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ReferenceService {
+
+    @Autowired
+    private UserService userService;
 
     private final ReferenceRepository referenceRepository;
 
@@ -70,8 +71,20 @@ public class ReferenceService {
     }
 
     public void delete(Integer id) {
-
         referenceRepository.deleteById(id);
+    }
+
+    public void sync(List<Reference> newReferenceList, List<Reference> updateReferenceList, List<Integer> deleteReferenceList) {
+
+        for(Reference reference: newReferenceList){
+            add(reference);
+        }
+        for(Reference reference: updateReferenceList){
+            update(reference);
+        }
+        for(Integer id: deleteReferenceList){
+            delete(id);
+        }
     }
 
     private Sort.Order getOrder(SortReference sort) {

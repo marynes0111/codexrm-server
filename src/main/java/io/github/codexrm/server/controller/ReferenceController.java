@@ -79,4 +79,34 @@ public class ReferenceController {
         return ResponseEntity.ok().build();
     }
 
+
+    @PostMapping("/Sync")
+    public ResponseEntity<ReferencePageDTO> sync(
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String title,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestBody final ReferenceLibraryDTO referenceLibrary) {
+
+
+        List <Reference> newReferenceList = dtoConverter.toReferenceList(referenceLibrary.getNewReferencesList());
+        List <Reference> updateReferenceList =  dtoConverter.toReferenceList(referenceLibrary.getUpdatedReferencesList());
+
+        referenceService.sync(newReferenceList,updateReferenceList,referenceLibrary.getDeletedReferencesList());
+
+        User user = userService.get(referenceLibrary.getUserId());
+
+        Page<Reference> pageTuts = referenceService.getAll(user, author, title, page, size, referenceLibrary.getSortReference());
+
+        if (pageTuts.getContent().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        List<ReferenceDTO> referenceDTOList = dtoConverter.toReferenceDTOList(pageTuts.getContent());
+        PageDTO pageDTO = new PageDTO(pageTuts.getNumber(), pageTuts.getTotalElements(), pageTuts.getTotalPages());
+        ReferencePageDTO referencePageDTO = new ReferencePageDTO(referenceDTOList,pageDTO);
+
+        return ResponseEntity.ok().body(referencePageDTO);
+    }
+
 }
