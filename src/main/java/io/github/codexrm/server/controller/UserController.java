@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/User")
@@ -63,7 +64,7 @@ public class UserController {
     }
 
     @PutMapping("/Update")
-    public ResponseEntity<UserDTO> update( @RequestBody final UserDTO userDTO){
+    public ResponseEntity<UserDTO> update(@RequestBody final UserDTO userDTO){
         User user = dtoConverter.toUser(userDTO);
         UserDTO userDTOUpdated = dtoConverter.toUserDTO(userService.update(user));
         return new ResponseEntity<>(userDTOUpdated, HttpStatus.OK);
@@ -72,6 +73,14 @@ public class UserController {
     @DeleteMapping("/Delete/{id}")
     public ResponseEntity<?> delete(@PathVariable final Integer id) {
         userService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/DeleteGroup")
+    public ResponseEntity<?> deleteGroup(@RequestBody ArrayList<Integer> idList) {
+        for(Integer id: idList) {
+            userService.delete(id);
+        }
         return ResponseEntity.ok().build();
     }
 }

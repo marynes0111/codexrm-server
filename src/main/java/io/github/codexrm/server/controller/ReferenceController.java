@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/Reference")
@@ -71,6 +72,14 @@ public class ReferenceController {
     @DeleteMapping("/Delete/{id}")
     public ResponseEntity<?> delete(@PathVariable final Integer id) {
         referenceService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/DeleteGroup")
+    public ResponseEntity<?> deleteGroup(@RequestBody ArrayList<Integer> idList) {
+        for(Integer id: idList) {
+            referenceService.delete(id);
+        }
         return ResponseEntity.ok().build();
     }
 
