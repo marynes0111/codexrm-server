@@ -7,8 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface ReferenceRepository extends JpaRepository<Reference, Integer> {
 
@@ -16,4 +14,8 @@ public interface ReferenceRepository extends JpaRepository<Reference, Integer> {
         Page<Reference> findByUserAndAuthorContaining(User user, String author, Pageable pageable);
         Page<Reference> findByUserAndTitleContaining(User user, String title, Pageable pageable);
         Page<Reference> findByUserAndAuthorContainingOrTitleContaining(User user, String author,String title, Pageable pageable);
+
+        Page<Reference> findByAuthorContaining(String author, Pageable pageable);
+        Page<Reference> findByTitleContaining(String title, Pageable pageable);
+        Page<Reference> findByAuthorContainingOrTitleContaining(String author,String title, Pageable pageable);
 }

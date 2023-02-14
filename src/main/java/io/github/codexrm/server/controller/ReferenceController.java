@@ -40,16 +40,11 @@ public class ReferenceController {
 
         User user = userService.get(2);
 
-        Page<Reference> pageTuts = referenceService.getAll(user, author, title, page, size, sort);
+        ReferencePageDTO referencePageDTO = getReferencePageDTO(referenceService.getAll(user, author, title, page, size, sort));
 
-        if (pageTuts.getContent().isEmpty()) {
+        if (referencePageDTO == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-        List<ReferenceDTO> referenceDTOList = dtoConverter.toReferenceDTOList(pageTuts.getContent());
-        PageDTO pageDTO = new PageDTO(pageTuts.getNumber(), pageTuts.getTotalElements(), pageTuts.getTotalPages());
-        ReferencePageDTO referencePageDTO = new ReferencePageDTO(referenceDTOList,pageDTO);
-
+        else
         return ResponseEntity.ok().body(referencePageDTO);
     }
 
@@ -79,7 +74,6 @@ public class ReferenceController {
         return ResponseEntity.ok().build();
     }
 
-
     @PostMapping("/Sync")
     public ResponseEntity<ReferencePageDTO> sync(
             @RequestParam(required = false) String author,
@@ -88,7 +82,6 @@ public class ReferenceController {
             @RequestParam(defaultValue = "5") int size,
             @RequestBody final ReferenceLibraryDTO referenceLibrary) {
 
-
         List <Reference> newReferenceList = dtoConverter.toReferenceList(referenceLibrary.getNewReferencesList());
         List <Reference> updateReferenceList =  dtoConverter.toReferenceList(referenceLibrary.getUpdatedReferencesList());
 
@@ -96,17 +89,40 @@ public class ReferenceController {
 
         User user = userService.get(referenceLibrary.getUserId());
 
-        Page<Reference> pageTuts = referenceService.getAll(user, author, title, page, size, referenceLibrary.getSortReference());
+        ReferencePageDTO referencePageDTO = getReferencePageDTO(referenceService.getAll(user, author, title, page, size, referenceLibrary.getSortReference()));
 
-        if (pageTuts.getContent().isEmpty()) {
+        if (referencePageDTO == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+        return ResponseEntity.ok().body(referencePageDTO);
+    }
+
+    @PostMapping("/GetAllFromUsers")
+    public ResponseEntity<ReferencePageDTO> getAllFromUsers(
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String title,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestBody(required = false) SortReference sort) {
+
+
+        ReferencePageDTO referencePageDTO = getReferencePageDTO(referenceService.getAllFromUsers(author, title, page, size, sort));
+
+        if (referencePageDTO == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        else
+        return ResponseEntity.ok().body(referencePageDTO);
+    }
+
+    private ReferencePageDTO getReferencePageDTO(Page<Reference> pageTuts){
+        if (pageTuts.getContent().isEmpty()) {
+            return null;
         }
 
         List<ReferenceDTO> referenceDTOList = dtoConverter.toReferenceDTOList(pageTuts.getContent());
         PageDTO pageDTO = new PageDTO(pageTuts.getNumber(), pageTuts.getTotalElements(), pageTuts.getTotalPages());
-        ReferencePageDTO referencePageDTO = new ReferencePageDTO(referenceDTOList,pageDTO);
 
-        return ResponseEntity.ok().body(referencePageDTO);
+       return new ReferencePageDTO(referenceDTOList,pageDTO);
     }
-
 }

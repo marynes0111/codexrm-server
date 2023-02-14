@@ -29,7 +29,7 @@ public class UserService {
         if (username == null)
             return userRepository.findAll(pagingSort);
         else
-            return  userRepository.findByUsernameContaining(username, pagingSort);
+            return userRepository.findByUsernameContaining(username, pagingSort);
     }
 
     public User get(Integer id) {return userRepository.findById(id).get();}
@@ -45,7 +45,6 @@ public class UserService {
         if (user.getId() != null && !userRepository.existsById(user.getId())) {
             throw new EntityNotFoundException("There is no entity with such ID in the database.");
         }
-
         return userRepository.save(user);
     }
 
@@ -99,7 +98,6 @@ public class UserService {
 
                 default:
                     return new Sort.Order(Sort.Direction.DESC, "password");
-
             }
         }
     }

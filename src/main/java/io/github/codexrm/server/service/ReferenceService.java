@@ -18,9 +18,6 @@ import java.util.List;
 @Service
 public class ReferenceService {
 
-    @Autowired
-    private UserService userService;
-
     private final ReferenceRepository referenceRepository;
 
     @Autowired
@@ -75,7 +72,6 @@ public class ReferenceService {
     }
 
     public void sync(List<Reference> newReferenceList, List<Reference> updateReferenceList, List<Integer> deleteReferenceList) {
-
         for(Reference reference: newReferenceList){
             add(reference);
         }
@@ -87,8 +83,29 @@ public class ReferenceService {
         }
     }
 
-    private Sort.Order getOrder(SortReference sort) {
+    public Page<Reference> getAllFromUsers(String author, String title, int page, int size, SortReference sort) {
+        Sort.Order order = getOrder(sort);
+        Pageable pagingSort = PageRequest.of(page, size, Sort.by(order));
 
+        if (author == null && title == null) {
+            return referenceRepository.findAll(pagingSort);
+        }
+        else{
+            if(author == null && title != null){
+                return referenceRepository.findByTitleContaining(title, pagingSort);
+            }
+            else{
+                if(author != null && title == null){
+                    return referenceRepository.findByAuthorContaining(author, pagingSort);
+                }
+                else{
+                    return referenceRepository.findByAuthorContainingOrTitleContaining(author,title,pagingSort);
+                }
+            }
+        }
+    }
+
+    private Sort.Order getOrder(SortReference sort) {
         if (sort == null) {
             return new Sort.Order(Sort.Direction.ASC, "id");
 
@@ -123,7 +140,6 @@ public class ReferenceService {
 
                 default:
                     return new Sort.Order(Sort.Direction.DESC, "note");
-
             }
         }
     }
