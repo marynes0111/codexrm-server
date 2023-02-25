@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RequestMapping("/User")
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     private final UserService userService;
@@ -30,6 +32,7 @@ public class UserController {
     }
 
     @PostMapping("/GetAll")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserPageDTO> getAll(
             @RequestParam(required = false) String username,
             @RequestParam(defaultValue = "0") int page,
@@ -51,12 +54,14 @@ public class UserController {
     }
 
     @GetMapping("/Get/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('MODERATOR') or hasRole('AUDITOR')")
     public ResponseEntity<UserDTO> getByUsername(@PathVariable final Integer id){
         UserDTO userDTO = dtoConverter.toUserDTO(userService.get(id));
         return ResponseEntity.ok().body(userDTO);
     }
 
     @PostMapping("/Add")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDTO> add(@RequestBody final UserDTO userDTO){
         User user = dtoConverter.toUser(userDTO);
         UserDTO userDTOAdded = dtoConverter.toUserDTO(userService.add(user));
@@ -64,6 +69,7 @@ public class UserController {
     }
 
     @PutMapping("/Update")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('MODERATOR') or hasRole('AUDITOR')")
     public ResponseEntity<UserDTO> update(@RequestBody final UserDTO userDTO){
         User user = dtoConverter.toUser(userDTO);
         UserDTO userDTOUpdated = dtoConverter.toUserDTO(userService.update(user));
@@ -71,12 +77,14 @@ public class UserController {
     }
 
     @DeleteMapping("/Delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable final Integer id) {
         userService.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/DeleteGroup")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteGroup(@RequestBody ArrayList<Integer> idList) {
         for(Integer id: idList) {
             userService.delete(id);

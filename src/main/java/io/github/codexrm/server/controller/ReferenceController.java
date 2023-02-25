@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RequestMapping("/Reference")
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class ReferenceController {
 
     private final ReferenceService referenceService;
@@ -32,6 +34,7 @@ public class ReferenceController {
     }
 
     @PostMapping("/GetAll")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ReferencePageDTO> getAll(
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String title,
@@ -50,12 +53,14 @@ public class ReferenceController {
     }
 
     @GetMapping("/Get/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ReferenceDTO> getById(@PathVariable final Integer id){
          ReferenceDTO referenceDTO = dtoConverter.toReferenceDTO(referenceService.get(id));
         return ResponseEntity.ok().body(referenceDTO);
     }
 
     @PostMapping("/Add")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ReferenceDTO> add(@RequestBody final ReferenceDTO referenceDTO){
         Reference reference = dtoConverter.createReference(referenceDTO);
         ReferenceDTO referenceDTOAdded = dtoConverter.toReferenceDTO(referenceService.add(reference));
@@ -63,6 +68,7 @@ public class ReferenceController {
     }
 
     @PutMapping("/Update")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ReferenceDTO> update( @RequestBody final ReferenceDTO referenceDTO){
         Reference reference = dtoConverter.toReference(referenceDTO);
         ReferenceDTO referenceDTOUpdated = dtoConverter.toReferenceDTO(referenceService.update(reference));
@@ -70,12 +76,14 @@ public class ReferenceController {
     }
 
     @DeleteMapping("/Delete/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> delete(@PathVariable final Integer id) {
         referenceService.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/DeleteGroup")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteGroup(@RequestBody ArrayList<Integer> idList) {
         for(Integer id: idList) {
             referenceService.delete(id);
@@ -84,6 +92,7 @@ public class ReferenceController {
     }
 
     @PostMapping("/Sync")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ReferencePageDTO> sync(
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String title,
@@ -107,6 +116,7 @@ public class ReferenceController {
     }
 
     @PostMapping("/GetAllFromUsers")
+    @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<ReferencePageDTO> getAllFromUsers(
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String title,
