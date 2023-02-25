@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestMapping("/User")
+@RequestMapping("/api/User")
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestMapping("/Reference")
+@RequestMapping("/api/Reference")
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ReferenceController {

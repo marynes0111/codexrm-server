@@ -1,21 +1,14 @@
 package io.github.codexrm.server.controller;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import io.github.codexrm.server.enums.ERole;
-import io.github.codexrm.server.model.Role;
-import io.github.codexrm.server.model.User;
 import io.github.codexrm.server.payload.request.LoginRequest;
 import io.github.codexrm.server.payload.request.SignupRequest;
 import io.github.codexrm.server.payload.response.MessageResponse;
 import io.github.codexrm.server.payload.response.UserInfoResponse;
-import io.github.codexrm.server.repository.RoleRepository;
-import io.github.codexrm.server.repository.UserRepository;
 import io.github.codexrm.server.security.jwt.JwtUtils;
 import io.github.codexrm.server.security.services.UserDetailsImpl;
 import io.github.codexrm.server.service.AuthService;
@@ -23,11 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
