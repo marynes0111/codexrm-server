@@ -1,11 +1,13 @@
 package io.github.codexrm.server.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "thesisreference")
 public class ThesisReference extends Reference{
+
+    @Column(name = "author")
+    private String author;
 
     @Column(name = "school")
     private String school;
@@ -18,22 +20,27 @@ public class ThesisReference extends Reference{
 
     public ThesisReference() {}
 
-    public ThesisReference(String author, String title, LocalDate date, String note, User userid, String school, String type, String address) {
-        super(author, title, date, note, userid);
+    public ThesisReference(String title, String year, String month, String note, User user, String author, String school, String type, String address) {
+        super(title, year, month, note, user);
+        this.author = author;
         this.school = school;
         this.type = type;
         this.address = address;
     }
 
-    public String getAddress() {return address;}
+    public String getAuthor() { return author; }
 
-    public void setAddress(String address) {this.address = address;}
+    public void setAuthor(String author) { this.author = author; }
 
-    public String getType() {return type;}
+    public String getSchool() { return school; }
 
-    public void setType(String type) {this.type = type;}
+    public void setSchool(String school) { this.school = school; }
 
-    public String getSchool() {return school;}
+    public String getType() { return type; }
 
-    public void setSchool(String school) {this.school = school;}
+    public void setType(String type) { this.type = type; }
+
+    public String getAddress() { return address; }
+
+    public void setAddress(String address) { this.address = address; }
 }

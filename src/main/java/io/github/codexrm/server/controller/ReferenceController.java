@@ -36,7 +36,7 @@ public class ReferenceController {
     @PostMapping("/GetAll")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ReferencePageDTO> getAll(
-            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String year,
             @RequestParam(required = false) String title,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
@@ -44,12 +44,14 @@ public class ReferenceController {
 
         User user = userService.get(2);
 
-        ReferencePageDTO referencePageDTO = getReferencePageDTO(referenceService.getAll(user, author, title, page, size, sort));
+        Page<Reference> pageTuts= referenceService.getAll(user, year, title, page, size, sort);
 
-        if (referencePageDTO == null)
+        if (pageTuts == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        else
-        return ResponseEntity.ok().body(referencePageDTO);
+        else{
+            ReferencePageDTO referencePageDTO = getReferencePageDTO(pageTuts);
+            return ResponseEntity.ok().body(referencePageDTO);
+        }
     }
 
     @GetMapping("/Get/{id}")
@@ -118,20 +120,21 @@ public class ReferenceController {
     @PostMapping("/GetAllFromUsers")
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<ReferencePageDTO> getAllFromUsers(
-            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String year,
             @RequestParam(required = false) String title,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestBody(required = false) SortReference sort) {
 
+        Page<Reference> pageTuts = referenceService.getAllFromUsers(year, title, page, size, sort);
 
-        ReferencePageDTO referencePageDTO = getReferencePageDTO(referenceService.getAllFromUsers(author, title, page, size, sort));
-
-        if (referencePageDTO == null)
+        if (pageTuts == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else {
+            ReferencePageDTO referencePageDTO = getReferencePageDTO(pageTuts);
+            return ResponseEntity.ok().body(referencePageDTO);
+        }
 
-        else
-        return ResponseEntity.ok().body(referencePageDTO);
     }
 
     private ReferencePageDTO getReferencePageDTO(Page<Reference> pageTuts){

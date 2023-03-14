@@ -5,10 +5,7 @@ import io.github.codexrm.server.model.Reference;
 import io.github.codexrm.server.model.User;
 import io.github.codexrm.server.repository.ReferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -25,24 +22,24 @@ public class ReferenceService {
         this.referenceRepository = referenceRepository;
     }
 
-    public Page<Reference> getAll(User user, String author, String title, int page, int size, SortReference sort) {
+    public Page<Reference> getAll(User user, String year, String title, int page, int size, SortReference sort) {
 
         Sort.Order order = getOrder(sort);
         Pageable pagingSort = PageRequest.of(page, size, Sort.by(order));
 
-        if (author == null && title == null) {
+        if (year == null && title == null) {
             return referenceRepository.findByUser(user, pagingSort);
         }
         else{
-            if(author == null && title != null){
+            if(year == null && title != null){
                 return referenceRepository.findByUserAndTitleContaining(user, title, pagingSort);
             }
             else{
-                if(author != null && title == null){
-                    return referenceRepository.findByUserAndAuthorContaining(user, author, pagingSort);
+                if(year != null && title == null){
+                    return referenceRepository.findByUserAndYearContaining(user, year, pagingSort);
                 }
                 else{
-                    return referenceRepository.findByUserAndAuthorContainingOrTitleContaining(user, author,title,pagingSort);
+                    return null;
                 }
             }
         }
@@ -83,23 +80,23 @@ public class ReferenceService {
         }
     }
 
-    public Page<Reference> getAllFromUsers(String author, String title, int page, int size, SortReference sort) {
+    public Page<Reference> getAllFromUsers(String year, String title, int page, int size, SortReference sort) {
         Sort.Order order = getOrder(sort);
         Pageable pagingSort = PageRequest.of(page, size, Sort.by(order));
 
-        if (author == null && title == null) {
+        if (year == null && title == null) {
             return referenceRepository.findAll(pagingSort);
         }
         else{
-            if(author == null && title != null){
+            if(year == null && title != null){
                 return referenceRepository.findByTitleContaining(title, pagingSort);
             }
             else{
-                if(author != null && title == null){
-                    return referenceRepository.findByAuthorContaining(author, pagingSort);
+                if(year != null && title == null){
+                    return referenceRepository.findByYearContaining(year, pagingSort);
                 }
                 else{
-                    return referenceRepository.findByAuthorContainingOrTitleContaining(author,title,pagingSort);
+                    return null;
                 }
             }
         }
@@ -117,11 +114,11 @@ public class ReferenceService {
                 case idDesc:
                     return new Sort.Order(Sort.Direction.DESC, "id");
 
-                case authorAsc:
-                    return new Sort.Order(Sort.Direction.ASC, "author");
+                case yearAsc:
+                    return new Sort.Order(Sort.Direction.ASC, "year");
 
-                case authorDesc:
-                    return new Sort.Order(Sort.Direction.DESC, "author");
+                case yearDesc:
+                    return new Sort.Order(Sort.Direction.DESC, "year");
 
                 case titleAsc:
                     return new Sort.Order(Sort.Direction.ASC, "title");
@@ -129,11 +126,11 @@ public class ReferenceService {
                 case titleDesc:
                     return new Sort.Order(Sort.Direction.DESC, "title");
 
-                case dateAsc:
-                    return new Sort.Order(Sort.Direction.ASC, "date");
+                case monthAsc:
+                    return new Sort.Order(Sort.Direction.ASC, "month");
 
-                case dateDesc:
-                    return new Sort.Order(Sort.Direction.DESC, "date");
+                case monthDesc:
+                    return new Sort.Order(Sort.Direction.DESC, "month");
 
                 case noteAsc:
                     return new Sort.Order(Sort.Direction.ASC, "note");

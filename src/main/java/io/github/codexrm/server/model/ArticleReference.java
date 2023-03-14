@@ -1,11 +1,13 @@
 package io.github.codexrm.server.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "articlereference")
 public class ArticleReference extends Reference {
+
+    @Column(name = "author")
+    private String author;
 
     @Column(name = "journal")
     private String journal;
@@ -19,29 +21,42 @@ public class ArticleReference extends Reference {
     @Column(name = "pages")
     private String pages;
 
+    @Column(name = "issn")
+    private String issn;
+
     public ArticleReference() {}
 
-    public ArticleReference(String author, String title, LocalDate date, String note, User userid, String journal, String volume, String number, String pages) {
-        super(author, title, date, note, userid);
+    public ArticleReference(String title, String year, String month, String note, User user, String author, String journal, String volume, String number, String pages, String issn) {
+        super(title, year, month, note, user);
+        this.author = author;
         this.journal = journal;
         this.volume = volume;
         this.number = number;
         this.pages = pages;
+        this.issn = issn;
     }
 
-    public String getPages() {return pages;}
+    public String getAuthor() { return author; }
 
-    public void setPages(String pages) {this.pages = pages;}
+    public void setAuthor(String author) { this.author = author; }
 
-    public String getNumber() {return number;}
+    public String getJournal() { return journal; }
 
-    public void setNumber(String number) {this.number = number;}
+    public void setJournal(String journal) { this.journal = journal; }
 
-    public String getVolume() {return volume;}
+    public String getVolume() { return volume; }
 
-    public void setVolume(String volume) {this.volume = volume;}
+    public void setVolume(String volume) { this.volume = volume; }
 
-    public String getJournal() {return journal;}
+    public String getNumber() { return number; }
 
-    public void setJournal(String journal) {this.journal = journal;}
+    public void setNumber(String number) { this.number = number; }
+
+    public String getPages() { return pages; }
+
+    public void setPages(String pages) { this.pages = pages; }
+
+    public String getIssn() { return issn; }
+
+    public void setIssn(String issn) { this.issn = issn; }
 }

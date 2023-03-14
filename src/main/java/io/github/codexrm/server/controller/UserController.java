@@ -1,10 +1,8 @@
 package io.github.codexrm.server.controller;
 
 import io.github.codexrm.server.component.DTOConverter;
-import io.github.codexrm.server.dto.PageDTO;
-import io.github.codexrm.server.dto.UserPageDTO;
+import io.github.codexrm.server.dto.*;
 import io.github.codexrm.server.enums.SortUser;
-import io.github.codexrm.server.dto.UserDTO;
 import io.github.codexrm.server.model.User;
 import io.github.codexrm.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

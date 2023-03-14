@@ -1,7 +1,6 @@
 package io.github.codexrm.server.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "booksectionreference")
@@ -13,13 +12,22 @@ public class BookSectionReference extends BookReference{
     @Column(name = "pages")
     private String pages;
 
+    @Column(name = "type")
+    private String type;
+
     public BookSectionReference() {}
 
-    public BookSectionReference(String author, String title, LocalDate date, String note, User userId, String publisher, String volume, String series, String address, String edition, String chapter, String pages) {
-        super( author, title, date, note, userId, publisher, volume, series, address, edition);
+    public BookSectionReference(String title, String year, String month, String note, User user, String author, String editor, String publisher, String volume, String number, String series, String address, String edition, String isbn,
+                                String chapter, String pages, String type) {
+        super(title, year, month, note, user, author, editor, publisher, volume, number, series, address, edition, isbn);
         this.chapter = chapter;
         this.pages = pages;
+        this.type = type;
     }
+
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
 
     public String getPages() {return pages;}
 

@@ -1,14 +1,19 @@
 package io.github.codexrm.server.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "conferenceproceedingsreference")
 public class ConferenceProceedingReference extends Reference {
 
+    @Column(name = "editor")
+    private String editor;
+
     @Column(name = "volume")
     private String volume;
+
+    @Column(name = "numbera")
+    private String number;
 
     @Column(name = "series")
     private String series;
@@ -16,13 +21,27 @@ public class ConferenceProceedingReference extends Reference {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "publisher")
+    private String publisher;
+
+    @Column(name = "organization")
+    private String organization;
+
+    @Column(name = "isbn")
+    private String isbn;
+
     public ConferenceProceedingReference() {}
 
-    public ConferenceProceedingReference(String author, String title, LocalDate date, String note, User userid, String volume, String series, String address) {
-        super(author, title, date, note, userid);
+    public ConferenceProceedingReference(String title, String year, String month, String note, User user, String editor, String volume, String number, String series, String address, String publisher, String isbn, String organization) {
+        super(title, year, month, note, user);
+        this.editor = editor;
         this.volume = volume;
+        this.number = number;
         this.series = series;
         this.address = address;
+        this.publisher = publisher;
+        this.isbn = isbn;
+        this.organization = organization;
     }
 
     public String getAddress() {
@@ -48,4 +67,24 @@ public class ConferenceProceedingReference extends Reference {
     public void setVolume(String volume) {
         this.volume = volume;
     }
+
+    public String getEditor() { return editor; }
+
+    public void setEditor(String editor) { this.editor = editor; }
+
+    public String getNumber() { return number; }
+
+    public void setNumber(String number) { this.number = number; }
+
+    public String getPublisher() { return publisher; }
+
+    public void setPublisher(String publisher) { this.publisher = publisher; }
+
+    public String getIsbn() { return isbn; }
+
+    public void setIsbn(String isbn) { this.isbn = isbn; }
+
+    public String getOrganization() { return organization; }
+
+    public void setOrganization(String organization) { this.organization = organization; }
 }

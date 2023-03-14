@@ -2,7 +2,6 @@ package io.github.codexrm.server.payload.request;
 
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.validation.constraints.*;
  
 public class SignupRequest {

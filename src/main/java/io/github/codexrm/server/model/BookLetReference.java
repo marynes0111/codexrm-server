@@ -1,12 +1,13 @@
 package io.github.codexrm.server.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "bookletreference")
 public class BookLetReference extends Reference{
 
+    @Column(name = "author")
+    private String author;
 
     @Column(name = "howpublished")
     private String howpublished;
@@ -14,10 +15,12 @@ public class BookLetReference extends Reference{
     @Column(name = "address")
     private String address;
 
+
     public BookLetReference() {}
 
-    public BookLetReference(String author, String title, LocalDate date, String note, User userId, String howpublished, String address) {
-        super(author, title, date, note, userId);
+    public BookLetReference(String title, String year, String month, String note, User user, String author, String howpublished, String address) {
+        super(title, year, month, note, user);
+        this.author = author;
         this.howpublished = howpublished;
         this.address = address;
     }
@@ -29,4 +32,8 @@ public class BookLetReference extends Reference{
     public String getHowpublished() {return howpublished;}
 
     public void setHowpublished(String howpublished) {this.howpublished = howpublished;}
+
+    public String getAuthor() { return author; }
+
+    public void setAuthor(String author) { this.author = author; }
 }

@@ -1,6 +1,5 @@
 package io.github.codexrm.server.repository;
 
-
 import io.github.codexrm.server.enums.ERole;
 import io.github.codexrm.server.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

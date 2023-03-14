@@ -11,11 +11,9 @@ import org.springframework.stereotype.Repository;
 public interface ReferenceRepository extends JpaRepository<Reference, Integer> {
 
         Page<Reference> findByUser(User user, Pageable pageable);
-        Page<Reference> findByUserAndAuthorContaining(User user, String author, Pageable pageable);
+        Page<Reference> findByUserAndYearContaining(User user, String year, Pageable pageable);
         Page<Reference> findByUserAndTitleContaining(User user, String title, Pageable pageable);
-        Page<Reference> findByUserAndAuthorContainingOrTitleContaining(User user, String author,String title, Pageable pageable);
 
-        Page<Reference> findByAuthorContaining(String author, Pageable pageable);
+        Page<Reference> findByYearContaining(String year, Pageable pageable);
         Page<Reference> findByTitleContaining(String title, Pageable pageable);
-        Page<Reference> findByAuthorContainingOrTitleContaining(String author,String title, Pageable pageable);
 }

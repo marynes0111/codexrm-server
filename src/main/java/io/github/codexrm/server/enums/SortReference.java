@@ -4,12 +4,12 @@ public enum SortReference {
 
     idDesc("id,desc"),
     idAsc("id,asc"),
-    authorDesc("author,desc"),
-    authorAsc("author,asc"),
     titleDesc("title,desc"),
     titleAsc("title,asc"),
-    dateDesc("date,desc"),
-    dateAsc("date,asc"),
+    yearAsc("year,asc"),
+    yearDesc("year,desc"),
+    monthAsc("month,asc"),
+    monthDesc("month,desc"),
     noteDesc("note,desc"),
     noteAsc("note,asc");
 

@@ -3,31 +3,31 @@ package io.github.codexrm.server.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "webpagereference")
 public class WebPageReference extends Reference {
 
-    @Column(name = "url")
-    private String url;
+    @Column(name = "author")
+    private String author;
 
-    @Column(name = "accessDate")
-    private LocalDate accessDate;
+    @Column(name = "howpublished")
+    private String howpublished;
+
 
     public WebPageReference() {}
 
-    public WebPageReference(String author, String title, LocalDate date, String note, User userid, String url, LocalDate accessDate) {
-        super(author, title, date, note, userid);
-        this.url = url;
-        this.accessDate = accessDate;
+    public WebPageReference(String title, String year, String month, String note, User user, String author, String howpublished) {
+        super(title, year, month, note, user);
+        this.author = author;
+        this.howpublished = howpublished;
     }
 
-    public String getUrl() { return url; }
+    public String getAuthor() { return author; }
 
-    public void setUrl(String url) { this.url = url; }
+    public void setAuthor(String author) { this.author = author; }
 
-    public LocalDate getAccessDate() { return accessDate; }
+    public String getHowpublished() { return howpublished; }
 
-    public void setAccessDate(LocalDate accessDate) { this.accessDate = accessDate; }
+    public void setHowpublished(String howpublished) { this.howpublished = howpublished; }
 }

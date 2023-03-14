@@ -4,7 +4,6 @@ import io.github.codexrm.server.model.*;
 import io.github.codexrm.server.dto.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -109,60 +108,50 @@ public class DTOConverter {
         if(referenceDTO.getClass() == ArticleReferenceDTO.class){
 
             ArticleReferenceDTO articleDTO = (ArticleReferenceDTO) referenceDTO;
-            return new ArticleReference(articleDTO.getAuthor(), articleDTO.getTitle(),
-                    articleDTO.getLocalDate(), articleDTO.getNote(), articleDTO.getUser(),
-                    articleDTO.getJournal(), articleDTO.getVolume(), articleDTO.getNumber(),
-                    articleDTO.getPages());
+            return new ArticleReference(articleDTO.getTitle(),articleDTO.getYear(),articleDTO.getMonth(),articleDTO.getNote(),articleDTO.getUser(),
+                    articleDTO.getAuthor(),articleDTO.getJournal(),articleDTO.getVolume(),articleDTO.getNumber(),articleDTO.getPages(), articleDTO.getIssn());
         }
         else if(referenceDTO.getClass() == BookSectionReferenceDTO.class){
 
             BookSectionReferenceDTO sectionDTO = (BookSectionReferenceDTO) referenceDTO;
-            return new BookSectionReference(sectionDTO.getAuthor(), sectionDTO.getTitle(),
-                    sectionDTO.getLocalDate(), sectionDTO.getNote(), sectionDTO.getUser(),
-                    sectionDTO.getPublisher(), sectionDTO.getVolume(), sectionDTO.getSeries(),
-                    sectionDTO.getAddress(), sectionDTO.getEdition(), sectionDTO.getChapter(),
-                    sectionDTO.getPages());
+            return new BookSectionReference(sectionDTO.getTitle(), sectionDTO.getYear(), sectionDTO.getMonth(), sectionDTO.getNote(), sectionDTO.getUser(),
+                    sectionDTO.getAuthor(), sectionDTO.getEditor(), sectionDTO.getPublisher(), sectionDTO.getVolume(), sectionDTO.getNumber(), sectionDTO.getSeries(), sectionDTO.getAddress(), sectionDTO.getEdition(), sectionDTO.getIsbn(),
+                    sectionDTO.getChapter(), sectionDTO.getPages(), sectionDTO.getType());
         }
         else if(referenceDTO.getClass() == BookReferenceDTO.class){
 
             BookReferenceDTO bookDTO = (BookReferenceDTO) referenceDTO;
-            return new BookReference(bookDTO.getAuthor(), bookDTO.getTitle(), bookDTO.getLocalDate(),
-                    bookDTO.getNote(), bookDTO.getUser(), bookDTO.getPublisher(),
-                    bookDTO.getVolume(), bookDTO.getSeries(), bookDTO.getAddress(), bookDTO.getEdition());
+            return new BookReference(bookDTO.getTitle(), bookDTO.getYear(), bookDTO.getMonth(), bookDTO.getNote(), bookDTO.getUser(),
+                    bookDTO.getAuthor(), bookDTO.getEditor(), bookDTO.getPublisher(), bookDTO.getVolume(), bookDTO.getNumber(), bookDTO.getSeries(), bookDTO.getAddress(), bookDTO.getEdition(), bookDTO.getIsbn() );
         }
         else if(referenceDTO.getClass() == BookLetReferenceDTO.class){
 
             BookLetReferenceDTO letDTO = (BookLetReferenceDTO) referenceDTO;
-            return new BookLetReference(letDTO.getAuthor(), letDTO.getTitle(), letDTO.getLocalDate(),
-                    letDTO.getNote(), letDTO.getUser(), letDTO.getHowpublished(),
-                    letDTO.getAddress());
+            return new BookLetReference(letDTO.getTitle(), letDTO.getYear(), letDTO.getMonth(), letDTO.getNote(), letDTO.getUser(),
+                    letDTO.getAuthor(), letDTO.getHowpublished(), letDTO.getAddress());
         }
         else if(referenceDTO.getClass() == ConferenceProceedingsReferenceDTO.class){
 
             ConferenceProceedingsReferenceDTO proceedingsDTO = (ConferenceProceedingsReferenceDTO) referenceDTO;
-            return new ConferenceProceedingReference(proceedingsDTO.getAuthor(), proceedingsDTO.getTitle(),
-                    proceedingsDTO.getLocalDate(), proceedingsDTO.getNote(), proceedingsDTO.getUser(),
-                    proceedingsDTO.getVolume(), proceedingsDTO.getSeries(), proceedingsDTO.getAddress());
+            return new ConferenceProceedingReference(proceedingsDTO.getTitle(), proceedingsDTO.getYear(), proceedingsDTO.getMonth(), proceedingsDTO.getNote(), proceedingsDTO.getUser(),
+                    proceedingsDTO.getEditor(), proceedingsDTO.getVolume(), proceedingsDTO.getNumber(), proceedingsDTO.getSeries(), proceedingsDTO.getAddress(), proceedingsDTO.getPublisher(), proceedingsDTO.getIsbn(), proceedingsDTO.getOrganization());
         }
         else if(referenceDTO.getClass() == ConferencePaperReferenceDTO.class){
 
             ConferencePaperReferenceDTO paperDTO = (ConferencePaperReferenceDTO) referenceDTO;
-            return new ConferencePaperReference(paperDTO.getAuthor(), paperDTO.getTitle(),
-                    paperDTO.getLocalDate(), paperDTO.getNote(), paperDTO.getUser(),
-                    paperDTO.getPublisher(), paperDTO.getVolume(), paperDTO.getAddress(),
-                    paperDTO.getPages());
+            return new ConferencePaperReference(paperDTO.getTitle(), paperDTO.getYear(), paperDTO.getMonth(), paperDTO.getNote(), paperDTO.getUser(),
+                    paperDTO.getAuthor(), paperDTO.getBookTitle(), paperDTO.getEditor(), paperDTO.getNumber(), paperDTO.getSeries(), paperDTO.getPublisher(), paperDTO.getVolume(), paperDTO.getAddress(), paperDTO.getPages(), paperDTO.getOrganization());
         }
         else if(referenceDTO.getClass() == WebPageReferenceDTO.class){
 
             WebPageReferenceDTO webDTO = (WebPageReferenceDTO) referenceDTO;
-            return new WebPageReference(webDTO.getAuthor(), webDTO.getTitle(), webDTO.getLocalDate(),
-                    webDTO.getNote(), webDTO.getUser(), webDTO.getUrl(), webDTO.getAccessDateLocal());
+            return new WebPageReference(webDTO.getTitle(), webDTO.getYear(), webDTO.getMonth(), webDTO.getNote(), webDTO.getUser(),
+                    webDTO.getAuthor(), webDTO.getHowpublished());
         }
         else{
             ThesisReferenceDTO thesisDTO = (ThesisReferenceDTO) referenceDTO;
-            return new ThesisReference(thesisDTO.getAuthor(), thesisDTO.getTitle(), thesisDTO.getLocalDate(),
-                    thesisDTO.getNote(), thesisDTO.getUser(), thesisDTO.getSchool(),
-                    thesisDTO.getType(), thesisDTO.getAddress());
+            return new ThesisReference(thesisDTO.getTitle(), thesisDTO.getYear(), thesisDTO.getMonth(), thesisDTO.getNote(), thesisDTO.getUser(),
+                    thesisDTO.getAuthor(), thesisDTO.getSchool(), thesisDTO.getType(), thesisDTO.getAddress());
         }
     }
 
