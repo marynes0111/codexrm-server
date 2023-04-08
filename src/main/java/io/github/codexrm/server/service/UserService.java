@@ -31,13 +31,6 @@ public class UserService {
 
     public User get(Integer id) {return userRepository.findById(id).get();}
 
-    public User add(User user) {
-        if (user.getId() != null && userRepository.existsById(user.getId())) {
-            throw new EntityExistsException("There is already existing entity with such ID in the database.");
-        }
-        return userRepository.save(user);
-    }
-
     public User update(User user) {
         if (user.getId() != null && !userRepository.existsById(user.getId())) {
             throw new EntityNotFoundException("There is no entity with such ID in the database.");

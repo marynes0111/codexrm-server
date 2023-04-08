@@ -42,7 +42,7 @@ public class ReferenceController {
             @RequestParam(defaultValue = "5") int size,
             @RequestBody(required = false) SortReference sort){
 
-        User user = userService.get(2);
+        User user = userService.get(3);
 
         Page<Reference> pageTuts= referenceService.getAll(user, year, title, page, size, sort);
 

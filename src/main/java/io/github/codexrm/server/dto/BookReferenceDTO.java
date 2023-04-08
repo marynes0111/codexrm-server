@@ -4,7 +4,6 @@ import io.github.codexrm.server.model.User;
 
 public class BookReferenceDTO extends ReferenceDTO{
 
-
     protected String author;
     protected String editor;
     protected String publisher;

@@ -1,5 +1,7 @@
 package io.github.codexrm.server.dto;
 
+import java.util.List;
+
 public class UserDTO {
 
     private Integer id;
@@ -9,6 +11,7 @@ public class UserDTO {
     private String lastName;
     private String email;
     private boolean enabled;
+    private List<String> roles;
 
     public UserDTO() {}
 
@@ -49,4 +52,10 @@ public class UserDTO {
     public boolean isEnabled() { return enabled; }
 
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
+
+    public List<String> getRoles() { return roles; }
+
+    public void setRoles(List<String> roles) { this.roles = roles; }
+
+    public void setRol(String rol) { this.roles.add(rol); }
 }

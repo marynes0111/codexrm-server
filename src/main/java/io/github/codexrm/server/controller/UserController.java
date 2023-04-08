@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -22,11 +23,13 @@ public class UserController {
 
     private final UserService userService;
     private final DTOConverter dtoConverter;
+    private PasswordEncoder encoder;
 
     @Autowired
-    public UserController(UserService userService, DTOConverter dtoConverter) {
+    public UserController(UserService userService, DTOConverter dtoConverter, PasswordEncoder encoder) {
         this.userService = userService;
         this.dtoConverter = dtoConverter;
+        this.encoder = encoder;
     }
 
     @PostMapping("/GetAll")
@@ -58,18 +61,11 @@ public class UserController {
         return ResponseEntity.ok().body(userDTO);
     }
 
-    @PostMapping("/Add")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserDTO> add(@RequestBody final UserDTO userDTO){
-        User user = dtoConverter.toUser(userDTO);
-        UserDTO userDTOAdded = dtoConverter.toUserDTO(userService.add(user));
-        return new ResponseEntity<>(userDTOAdded, HttpStatus.CREATED);
-    }
-
     @PutMapping("/Update")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('MODERATOR') or hasRole('AUDITOR')")
     public ResponseEntity<UserDTO> update(@RequestBody final UserDTO userDTO){
         User user = dtoConverter.toUser(userDTO);
+        user.setPassword(encoder.encode(user.getPassword()));
         UserDTO userDTOUpdated = dtoConverter.toUserDTO(userService.update(user));
         return new ResponseEntity<>(userDTOUpdated, HttpStatus.OK);
     }
