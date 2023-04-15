@@ -2,11 +2,10 @@ package io.github.codexrm.server.controller;
 
 import io.github.codexrm.server.component.DTOConverter;
 import io.github.codexrm.server.dto.*;
-import io.github.codexrm.server.enums.SortReference;
-import io.github.codexrm.server.model.Reference;
-import io.github.codexrm.server.model.User;
-import io.github.codexrm.server.service.ReferenceService;
-import io.github.codexrm.server.service.UserService;
+import io.github.codexrm.server.enums.*;
+import io.github.codexrm.server.model.*;
+import io.github.codexrm.server.service.*;
+import org.jbibtex.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -14,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +40,10 @@ public class ReferenceController {
             @RequestParam(required = false) String title,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
+            @RequestParam Integer userId,
             @RequestBody(required = false) SortReference sort){
 
-        User user = userService.get(3);
+        User user = userService.get(userId);
 
         Page<Reference> pageTuts= referenceService.getAll(user, year, title, page, size, sort);
 
@@ -115,6 +116,27 @@ public class ReferenceController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
         return ResponseEntity.ok().body(referencePageDTO);
+    }
+
+    @PostMapping("/Import")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity.BodyBuilder importReferences(
+            @RequestParam String path,
+            @RequestParam Integer userId,
+            @RequestBody final Format format) {
+
+        try {
+            User user = userService.get(userId);
+            ArrayList<Reference> refereceList = referenceService.importReferences(path, format);
+            for (Reference reference: refereceList) {
+                reference.setUser(user);
+                referenceService.add(reference);
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok();
     }
 
     @PostMapping("/GetAllFromUsers")

@@ -1,25 +1,33 @@
 package io.github.codexrm.server.service;
 
+import io.github.codexrm.server.component.ImportR;
+import io.github.codexrm.server.enums.Format;
 import io.github.codexrm.server.enums.SortReference;
 import io.github.codexrm.server.model.Reference;
 import io.github.codexrm.server.model.User;
 import io.github.codexrm.server.repository.ReferenceRepository;
+import org.jbibtex.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ReferenceService {
 
     private final ReferenceRepository referenceRepository;
+    private final ImportR importR;
+
 
     @Autowired
     public ReferenceService(final ReferenceRepository referenceRepository) {
         this.referenceRepository = referenceRepository;
+        importR = new ImportR();
     }
 
     public Page<Reference> getAll(User user, String year, String title, int page, int size, SortReference sort) {
@@ -79,6 +87,12 @@ public class ReferenceService {
             delete(id);
         }
     }
+
+    public ArrayList<Reference> importReferences(String path, Format format) throws IOException, ParseException {
+
+        return importR.importReferences(path,format);
+    }
+
 
     public Page<Reference> getAllFromUsers(String year, String title, int page, int size, SortReference sort) {
         Sort.Order order = getOrder(sort);
