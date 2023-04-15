@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +124,7 @@ public class ReferenceController {
     public ResponseEntity.BodyBuilder importReferences(
             @RequestParam String path,
             @RequestParam Integer userId,
-            @RequestBody final Format format) {
+            @RequestParam String format){
 
         try {
             User user = userService.get(userId);
@@ -135,7 +136,26 @@ public class ReferenceController {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+        return ResponseEntity.ok();
+    }
 
+    @PostMapping("/Export")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity.BodyBuilder exportReferences(
+            @RequestParam String path,
+            @RequestParam String format,
+            @RequestBody final ArrayList<Integer> idList){
+
+        ArrayList<Reference> referenceList = new ArrayList<>();
+        for (Integer id: idList) {
+            referenceList.add(referenceService.get(id));
+        }
+
+        try {
+            referenceService.exportReferences(new File(path), referenceList, format);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.ok();
     }
 

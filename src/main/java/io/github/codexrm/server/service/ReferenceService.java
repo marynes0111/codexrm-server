@@ -1,7 +1,7 @@
 package io.github.codexrm.server.service;
 
+import io.github.codexrm.server.component.ExportR;
 import io.github.codexrm.server.component.ImportR;
-import io.github.codexrm.server.enums.Format;
 import io.github.codexrm.server.enums.SortReference;
 import io.github.codexrm.server.model.Reference;
 import io.github.codexrm.server.model.User;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +23,14 @@ public class ReferenceService {
 
     private final ReferenceRepository referenceRepository;
     private final ImportR importR;
+    private final ExportR exportR;
 
 
     @Autowired
     public ReferenceService(final ReferenceRepository referenceRepository) {
         this.referenceRepository = referenceRepository;
         importR = new ImportR();
+        exportR = new ExportR();
     }
 
     public Page<Reference> getAll(User user, String year, String title, int page, int size, SortReference sort) {
@@ -88,11 +91,15 @@ public class ReferenceService {
         }
     }
 
-    public ArrayList<Reference> importReferences(String path, Format format) throws IOException, ParseException {
+    public ArrayList<Reference> importReferences(String path, String format) throws IOException, ParseException {
 
         return importR.importReferences(path,format);
     }
 
+    public void exportReferences(File file, ArrayList<Reference> referenceList, String format) throws IOException, ParseException {
+
+        exportR.exportReferenceList(file,referenceList, format);
+    }
 
     public Page<Reference> getAllFromUsers(String year, String title, int page, int size, SortReference sort) {
         Sort.Order order = getOrder(sort);

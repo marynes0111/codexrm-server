@@ -2,7 +2,6 @@ package io.github.codexrm.server.component;
 
 import io.github.codexrm.EILibrary.controller.EIManager;
 import io.github.codexrm.EILibrary.model.*;
-import io.github.codexrm.server.enums.Format;
 import io.github.codexrm.server.model.*;
 import org.jbibtex.ParseException;
 import org.jbibtex.TokenMgrException;
@@ -18,7 +17,7 @@ public class ImportR {
         this.enumsConverter = new EnumsConverter();
     }
 
-    public ArrayList<Reference> importReferences(String path, Format format) throws IOException, TokenMgrException, ParseException {
+    public ArrayList<Reference> importReferences(String path, String format) throws IOException, TokenMgrException, ParseException {
 
         EIManager manager = new EIManager();
         ArrayList<Reference> referenceList = new ArrayList<>();

@@ -1,7 +1,6 @@
 package io.github.codexrm.server.component;
 
 import io.github.codexrm.EILibrary.enums.*;
-import io.github.codexrm.server.enums.Format;
 
 public class EnumsConverter {
 
@@ -80,13 +79,13 @@ public class EnumsConverter {
         }
     }
 
-    public FormatLibrary getFormat(Format format) {
+    public FormatLibrary getFormat(String format) {
 
         if (format != null) {
             switch (format) {
-                case RIS:
+                case "RIS":
                     return FormatLibrary.RIS;
-                case BIBTEX:
+                case "BIBTEX":
                     return FormatLibrary.BIBTEX;
                 default:
                     return null;
