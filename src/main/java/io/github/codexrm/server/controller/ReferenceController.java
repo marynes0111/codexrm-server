@@ -5,18 +5,29 @@ import io.github.codexrm.server.dto.*;
 import io.github.codexrm.server.enums.*;
 import io.github.codexrm.server.model.*;
 import io.github.codexrm.server.service.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.jbibtex.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RequestMapping("/api/Reference")
 @RestController
@@ -26,6 +37,8 @@ public class ReferenceController {
     private final ReferenceService referenceService;
     private final UserService userService;
     private final DTOConverter dtoConverter;
+
+    private static String UPLOADED_FOLDER = "tempUpload";
 
     @Autowired
     public ReferenceController(ReferenceService referenceService,UserService userService, DTOConverter dtoConverter) {
@@ -119,44 +132,67 @@ public class ReferenceController {
         return ResponseEntity.ok().body(referencePageDTO);
     }
 
-    @PostMapping("/Import")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity.BodyBuilder importReferences(
-            @RequestParam String path,
+    @PostMapping(value = "/Import", consumes = {"multipart/form-data"})
+    @Operation(summary = "Upload a single File")
+    public ResponseEntity<?> importReferences(
             @RequestParam Integer userId,
-            @RequestParam String format){
+            @RequestParam String format,
+            @RequestParam("file") MultipartFile uploadfile){
 
+      //  logger.debug("Single file upload!");
+        if (uploadfile.isEmpty()) {
+            return new ResponseEntity("You must select a file!", HttpStatus.OK);
+        }
         try {
+            saveUploadedFiles(Arrays.asList(uploadfile));
+
             User user = userService.get(userId);
-            ArrayList<Reference> refereceList = referenceService.importReferences(path, format);
+            File file = new File(UPLOADED_FOLDER, uploadfile.getOriginalFilename());
+            ArrayList<Reference> refereceList = referenceService.importReferences(file.getPath(), format);
             for (Reference reference: refereceList) {
                 reference.setUser(user);
                 referenceService.add(reference);
             }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.ok();
-    }
+            file.delete();
+            return new ResponseEntity<>("Reference Imported!", HttpStatus.OK);
 
-    @PostMapping("/Export")
+        } catch (IOException | ParseException e) {
+            return new ResponseEntity < > (HttpStatus.BAD_REQUEST);
+        }
+
+    }
+    @RequestMapping(path = "/Export", method = RequestMethod.POST)
+    @Operation(summary = "Download a File")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity.BodyBuilder exportReferences(
-            @RequestParam String path,
+    public ResponseEntity <Resource> exportReferences(
+            @RequestParam String fileName,
             @RequestParam String format,
-            @RequestBody final ArrayList<Integer> idList){
+            @RequestBody final ArrayList<Integer> idList) throws IOException {
 
         ArrayList<Reference> referenceList = new ArrayList<>();
         for (Integer id: idList) {
             referenceList.add(referenceService.get(id));
         }
-
+        Path path = Paths.get(UPLOADED_FOLDER, fileName);
+        File file = new File(path.toString());
         try {
-            referenceService.exportReferences(new File(path), referenceList, format);
+            referenceService.exportReferences(file, referenceList, format);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        return ResponseEntity.ok();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(file.length())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
     }
 
     @PostMapping("/GetAllFromUsers")
@@ -188,5 +224,19 @@ public class ReferenceController {
         PageDTO pageDTO = new PageDTO(pageTuts.getNumber(), pageTuts.getTotalElements(), pageTuts.getTotalPages());
 
        return new ReferencePageDTO(referenceDTOList,pageDTO);
+    }
+
+    // save file
+    private void saveUploadedFiles(List <MultipartFile> files) throws IOException {
+
+        for (MultipartFile file: files) {
+            if (file.isEmpty()) {
+                continue;
+                // next pls
+            }
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER, file.getOriginalFilename());
+            Files.write(path, bytes);
+        }
     }
 }
