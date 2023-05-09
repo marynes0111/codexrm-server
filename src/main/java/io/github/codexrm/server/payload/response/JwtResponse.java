@@ -2,7 +2,10 @@ package io.github.codexrm.server.payload.response;
 
 import java.util.List;
 
-public class UserInfoResponse {
+public class JwtResponse {
+
+	private String token;
+	private String type = "Bearer";
 	private Integer id;
 	private String username;
 	private String email;
@@ -11,9 +14,9 @@ public class UserInfoResponse {
 	private boolean enabled;
 	private List<String> roles;
 
-	public UserInfoResponse(Integer id, String username, String email, String name, String lastName,
-		boolean enabled, List<String> roles) {
-
+	public JwtResponse(String accessToken, Integer id, String username, String email, String name, String lastName,
+					   boolean enabled, List<String> roles) {
+		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
@@ -22,6 +25,14 @@ public class UserInfoResponse {
 		this.enabled = enabled;
 		this.roles = roles;
 	}
+
+	public String getAccessToken() { return token; }
+
+	public void setAccessToken(String accessToken) { this.token = accessToken; }
+
+	public String getTokenType() { return type; }
+
+	public void setTokenType(String tokenType) { this.type = tokenType; }
 
 	public Integer getId() { return id; }
 
