@@ -53,7 +53,7 @@ public class ReferenceController {
             @RequestParam(required = false) String year,
             @RequestParam(required = false) String title,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "10") int size,
             @RequestParam Integer userId,
             @RequestBody(required = false) SortReference sort){
 
@@ -78,16 +78,16 @@ public class ReferenceController {
 
     @PostMapping("/Add")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<ReferenceDTO> add(@RequestBody final ReferenceDTO referenceDTO){
-        Reference reference = dtoConverter.createReference(referenceDTO);
+    public ResponseEntity<ReferenceDTO> add(@RequestParam Integer userId, @RequestBody final ReferenceDTO referenceDTO){
+        Reference reference = dtoConverter.createReference(referenceDTO, userService.get(userId));
         ReferenceDTO referenceDTOAdded = dtoConverter.toReferenceDTO(referenceService.add(reference));
         return new ResponseEntity<>(referenceDTOAdded, HttpStatus.CREATED);
     }
 
     @PutMapping("/Update")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<ReferenceDTO> update( @RequestBody final ReferenceDTO referenceDTO){
-        Reference reference = dtoConverter.toReference(referenceDTO);
+    public ResponseEntity<ReferenceDTO> update(@RequestParam Integer userId, @RequestBody final ReferenceDTO referenceDTO){
+        Reference reference = dtoConverter.toReference(referenceDTO, userService.get(userId));
         ReferenceDTO referenceDTOUpdated = dtoConverter.toReferenceDTO(referenceService.update(reference));
         return new ResponseEntity<>(referenceDTOUpdated, HttpStatus.OK);
     }
@@ -114,11 +114,11 @@ public class ReferenceController {
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String title,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "10") int size,
             @RequestBody final ReferenceLibraryDTO referenceLibrary) {
 
-        List <Reference> newReferenceList = dtoConverter.toReferenceList(referenceLibrary.getNewReferencesList());
-        List <Reference> updateReferenceList =  dtoConverter.toReferenceList(referenceLibrary.getUpdatedReferencesList());
+        List <Reference> newReferenceList = dtoConverter.toReferenceList(referenceLibrary.getNewReferencesList(), userService.get(referenceLibrary.getUserId()));
+        List <Reference> updateReferenceList =  dtoConverter.toReferenceList(referenceLibrary.getUpdatedReferencesList(), userService.get(referenceLibrary.getUserId()));
 
         referenceService.sync(newReferenceList,updateReferenceList,referenceLibrary.getDeletedReferencesList());
 

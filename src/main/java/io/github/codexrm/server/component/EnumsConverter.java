@@ -151,7 +151,7 @@ public class EnumsConverter {
         }
     }
 
-    public ThesisTypeLibrary getThesisTypelibrary(String type) {
+    public ThesisTypeLibrary getThesisTypeLibrary(String type) {
 
         if (type != null) {
             switch (type) {

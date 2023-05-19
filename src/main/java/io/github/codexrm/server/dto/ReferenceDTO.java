@@ -2,7 +2,6 @@ package io.github.codexrm.server.dto;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.github.codexrm.server.model.User;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({@JsonSubTypes.Type(value = ArticleReferenceDTO.class, name = "articleDTO"),
@@ -20,25 +19,22 @@ public class ReferenceDTO {
     protected String month;
     protected String note;
     protected Integer id;
-    protected User user;
 
     public ReferenceDTO() {}
 
-    public ReferenceDTO(String title, String year, String month, String note, Integer id, User user) {
+    public ReferenceDTO(String title, String year, String month, String note, Integer id) {
         this.title = title;
         this.year = year;
         this.month = month;
         this.note = note;
         this.id = id;
-        this.user = user;
     }
 
-    public ReferenceDTO(String title, String year, String month, String note, User user) {
+    public ReferenceDTO(String title, String year, String month, String note) {
         this.title = title;
         this.year = year;
         this.month = month;
         this.note = note;
-        this.user = user;
     }
 
     public String getTitle() { return title; }
@@ -60,8 +56,4 @@ public class ReferenceDTO {
     public Integer getId() { return id; }
 
     public void setId(Integer id) { this.id = id; }
-
-    public User getUser() { return user; }
-
-    public void setUser(User user) { this.user = user; }
 }
