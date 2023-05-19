@@ -8,15 +8,20 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import io.github.codexrm.server.enums.ERole;
+import io.github.codexrm.server.exception.TokenRefreshException;
+import io.github.codexrm.server.model.RefreshToken;
 import io.github.codexrm.server.model.Role;
 import io.github.codexrm.server.model.User;
 import io.github.codexrm.server.payload.request.LoginRequest;
 import io.github.codexrm.server.payload.request.SignupRequest;
+import io.github.codexrm.server.payload.request.TokenRefreshRequest;
 import io.github.codexrm.server.payload.response.MessageResponse;
 import io.github.codexrm.server.payload.response.JwtResponse;
+import io.github.codexrm.server.payload.response.TokenRefreshResponse;
 import io.github.codexrm.server.repository.RoleRepository;
 import io.github.codexrm.server.repository.UserRepository;
 import io.github.codexrm.server.security.jwt.JwtUtils;
+import io.github.codexrm.server.security.services.RefreshTokenService;
 import io.github.codexrm.server.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,6 +46,9 @@ public class AuthController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    RefreshTokenService refreshTokenService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -117,25 +125,46 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
+
+        String jwt = jwtUtils.generateJwtToken(userDetails);
+
+        List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                userDetails.getName(),
-                userDetails.getLastName(),
-                userDetails.isEnabled(),
-                roles));
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
 
+        return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
+                userDetails.getUsername(), userDetails.getEmail(), userDetails.getName(),
+                userDetails.getLastName(), userDetails.isEnabled(), roles));
+    }
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtUtils.generateTokenFromUsername(user.getUsername());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
+    }
+
+    @PostMapping("/signout")
+    public ResponseEntity<?> logoutUser() {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer userId = userDetails.getId();
+        refreshTokenService.deleteByUserId(userId);
+        return ResponseEntity.ok(new MessageResponse("Log out successful!"));
     }
 }
+

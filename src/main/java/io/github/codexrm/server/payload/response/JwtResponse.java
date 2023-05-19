@@ -6,6 +6,7 @@ public class JwtResponse {
 
 	private String token;
 	private String type = "Bearer";
+	private String refreshToken;
 	private Integer id;
 	private String username;
 	private String email;
@@ -14,9 +15,10 @@ public class JwtResponse {
 	private boolean enabled;
 	private List<String> roles;
 
-	public JwtResponse(String accessToken, Integer id, String username, String email, String name, String lastName,
+	public JwtResponse(String accessToken, String refreshToken, Integer id, String username, String email, String name, String lastName,
 					   boolean enabled, List<String> roles) {
 		this.token = accessToken;
+		this.refreshToken = refreshToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
@@ -33,6 +35,10 @@ public class JwtResponse {
 	public String getTokenType() { return type; }
 
 	public void setTokenType(String tokenType) { this.type = tokenType; }
+
+	public String getRefreshToken() { return refreshToken; }
+
+	public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 
 	public Integer getId() { return id; }
 
