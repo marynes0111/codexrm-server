@@ -1,13 +1,18 @@
 package io.github.codexrm.server.payload.response;
 
+import java.util.Date;
+
 public class TokenRefreshResponse {
+
   private String accessToken;
   private String refreshToken;
   private String tokenType = "Bearer";
+  private Date tokenExpirationDate;
 
-  public TokenRefreshResponse(String accessToken, String refreshToken) {
+  public TokenRefreshResponse(String accessToken, String refreshToken, Date tokenExpirationDate) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
+    this.tokenExpirationDate = tokenExpirationDate;
   }
 
   public String getAccessToken() {
@@ -33,5 +38,9 @@ public class TokenRefreshResponse {
   public void setTokenType(String tokenType) {
     this.tokenType = tokenType;
   }
+
+  public Date getTokenExpirationDate() { return tokenExpirationDate; }
+
+  public void setTokenExpirationDate(Date tokenExpirationDate) { this.tokenExpirationDate = tokenExpirationDate; }
 
 }

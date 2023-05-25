@@ -20,6 +20,8 @@ public class JwtUtils {
   @Value("${codexrm.app.jwtExpirationMs}")
   private int jwtExpirationMs;
 
+  public int getJwtExpirationMs() { return jwtExpirationMs; }
+
   public String generateJwtToken(UserDetailsImpl userPrincipal) {
     return generateTokenFromUsername(userPrincipal.getUsername());
   }

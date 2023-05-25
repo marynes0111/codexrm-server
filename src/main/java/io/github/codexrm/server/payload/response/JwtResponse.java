@@ -1,5 +1,6 @@
 package io.github.codexrm.server.payload.response;
 
+import java.util.Date;
 import java.util.List;
 
 public class JwtResponse {
@@ -7,6 +8,8 @@ public class JwtResponse {
 	private String token;
 	private String type = "Bearer";
 	private String refreshToken;
+	private Date tokenExpirationDate;
+	private Date refreshTokenExpirationDate;
 	private Integer id;
 	private String username;
 	private String email;
@@ -15,10 +18,12 @@ public class JwtResponse {
 	private boolean enabled;
 	private List<String> roles;
 
-	public JwtResponse(String accessToken, String refreshToken, Integer id, String username, String email, String name, String lastName,
+	public JwtResponse(String accessToken, String refreshToken, Date tokenExpirationDate, Date refreshTokenExpirationDate, Integer id, String username, String email, String name, String lastName,
 					   boolean enabled, List<String> roles) {
 		this.token = accessToken;
 		this.refreshToken = refreshToken;
+		this.tokenExpirationDate = tokenExpirationDate;
+		this.refreshTokenExpirationDate = refreshTokenExpirationDate;
 		this.id = id;
 		this.username = username;
 		this.email = email;
@@ -39,6 +44,14 @@ public class JwtResponse {
 	public String getRefreshToken() { return refreshToken; }
 
 	public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
+
+	public Date getTokenExpirationDate() { return tokenExpirationDate; }
+
+	public void setTokenExpirationDate(Date tokenExpirationDate) { this.tokenExpirationDate = tokenExpirationDate; }
+
+	public Date getRefreshTokenExpirationDate() { return refreshTokenExpirationDate; }
+
+	public void setRefreshTokenExpirationDate(Date refreshTokenExpirationDate) { this.refreshTokenExpirationDate = refreshTokenExpirationDate; }
 
 	public Integer getId() { return id; }
 

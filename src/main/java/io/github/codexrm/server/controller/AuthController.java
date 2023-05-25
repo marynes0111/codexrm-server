@@ -1,5 +1,6 @@
 package io.github.codexrm.server.controller;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -139,7 +140,10 @@ public class AuthController {
 
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
 
-        return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
+        Date tokenDate = new Date((new Date()).getTime() + jwtUtils.getJwtExpirationMs());
+        Date refreshTokenDate =  Date.from(refreshToken.getExpiryDate());
+
+        return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), tokenDate, refreshTokenDate, userDetails.getId(),
                 userDetails.getUsername(), userDetails.getEmail(), userDetails.getName(),
                 userDetails.getLastName(), userDetails.isEnabled(), roles));
     }
@@ -148,12 +152,13 @@ public class AuthController {
     public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
         String requestRefreshToken = request.getRefreshToken();
 
+
         return refreshTokenService.findByToken(requestRefreshToken)
                 .map(refreshTokenService::verifyExpiration)
                 .map(RefreshToken::getUser)
                 .map(user -> {
                     String token = jwtUtils.generateTokenFromUsername(user.getUsername());
-                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken, new Date((new Date()).getTime() + jwtUtils.getJwtExpirationMs())));
                 })
                 .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
                         "Refresh token is not in database!"));
