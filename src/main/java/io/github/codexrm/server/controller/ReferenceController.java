@@ -172,7 +172,6 @@ public class ReferenceController {
             @RequestParam String format,
             @RequestParam("file") MultipartFile uploadfile) {
 
-        //  logger.debug("Single file upload!");
         if (uploadfile.isEmpty())
             return new ResponseEntity("You must select a file!", HttpStatus.OK);
 
@@ -181,6 +180,7 @@ public class ReferenceController {
 
             UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = userService.get(userDetails.getId());
+
             File file = new File(UPLOADED_FOLDER, uploadfile.getOriginalFilename());
             ArrayList<Reference> refereceList = referenceService.importReferences(file.getPath(), format);
             for (Reference reference : refereceList) {

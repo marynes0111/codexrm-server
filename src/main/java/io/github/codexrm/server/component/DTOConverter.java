@@ -54,49 +54,50 @@ public class DTOConverter {
 
         if (referenceDTO.getClass() == ArticleReferenceDTO.class) {
 
-            validation.validateArticleReferenceDTO((ArticleReferenceDTO) referenceDTO);
             ArticleReference article = modelMapper.map(referenceDTO, ArticleReference.class);
+            validation.validateArticleReference(article);
             reference = validation.validateRequiredArticle(article);
 
         } else if (referenceDTO.getClass() == BookSectionReferenceDTO.class) {
 
-            validation.validateBookSectionReferenceDTO((BookSectionReferenceDTO) referenceDTO);
             BookSectionReference section = modelMapper.map(referenceDTO, BookSectionReference.class);
+            validation.validateBookSectionReference(section);
             reference = validation.validateRequiredBookSection(section);
 
         } else if (referenceDTO.getClass() == BookReferenceDTO.class) {
 
-            validation.validateBookReferenceDTO((BookReferenceDTO) referenceDTO);
             BookReference book = modelMapper.map(referenceDTO, BookReference.class);
+            validation.validateBookReference(book);
             reference = validation.validateRequiredBook(book);
 
         } else if (referenceDTO.getClass() == BookLetReferenceDTO.class) {
 
-            validation.validateBookLetReferenceDTO((BookLetReferenceDTO) referenceDTO);
             BookLetReference let = modelMapper.map(referenceDTO, BookLetReference.class);
+            validation.validateBookLetReference(let);
             reference = validation.validateRequiredBookLet(let);
 
         } else if (referenceDTO.getClass() == ConferenceProceedingsReferenceDTO.class) {
 
-            validation.validateConferenceProceedingsReferenceDTO((ConferenceProceedingsReferenceDTO) referenceDTO);
             ConferenceProceedingReference proceedings = modelMapper.map(referenceDTO, ConferenceProceedingReference.class);
+            validation.validateConferenceProceedingsReference(proceedings);
             reference = validation.validateRequiredConferenceProceedings(proceedings);
 
         } else if (referenceDTO.getClass() == ConferencePaperReferenceDTO.class) {
 
-            validation.validateConferencePaperReferenceDTO((ConferencePaperReferenceDTO) referenceDTO);
             ConferencePaperReference paper = modelMapper.map(referenceDTO, ConferencePaperReference.class);
+            validation.validateConferencePaperReference(paper);
             reference = validation.validateRequiredConferencePaper(paper);
 
         } else if (referenceDTO.getClass() == WebPageReferenceDTO.class) {
 
-            validation.validateWebPageReferenceDTO((WebPageReferenceDTO) referenceDTO);
-            reference = modelMapper.map(referenceDTO, WebPageReference.class);
+            WebPageReference webPage = modelMapper.map(referenceDTO, WebPageReference.class);
+            validation.validateWebPageReference(webPage);
+            reference = webPage;
 
         } else {
 
-            validation.validateThesisReferenceDTO((ThesisReferenceDTO) referenceDTO);
             ThesisReference thesis = modelMapper.map(referenceDTO, ThesisReference.class);
+            validation.validateThesisReference(thesis);
             reference = validation.validateRequiredThesis(thesis);
         }
         reference.setUser(user);
@@ -128,65 +129,72 @@ public class DTOConverter {
         if (referenceDTO.getClass() == ArticleReferenceDTO.class) {
 
             ArticleReferenceDTO articleDTO = (ArticleReferenceDTO) referenceDTO;
-            validation.validateArticleReferenceDTO(articleDTO);
             ArticleReference article = new ArticleReference(articleDTO.getTitle(), articleDTO.getYear(), articleDTO.getMonth(), articleDTO.getNote(), user,
                     articleDTO.getAuthor(), articleDTO.getJournal(), articleDTO.getVolume(), articleDTO.getNumber(), articleDTO.getPages(), articleDTO.getIssn());
+
+            validation.validateArticleReference(article);
             return validation.validateRequiredArticle(article);
 
         } else if (referenceDTO.getClass() == BookSectionReferenceDTO.class) {
 
             BookSectionReferenceDTO sectionDTO = (BookSectionReferenceDTO) referenceDTO;
-            validation.validateBookSectionReferenceDTO(sectionDTO);
             BookSectionReference section = new BookSectionReference(sectionDTO.getTitle(), sectionDTO.getYear(), sectionDTO.getMonth(), sectionDTO.getNote(), user,
                     sectionDTO.getAuthor(), sectionDTO.getEditor(), sectionDTO.getPublisher(), sectionDTO.getVolume(), sectionDTO.getNumber(), sectionDTO.getSeries(), sectionDTO.getAddress(), sectionDTO.getEdition(), sectionDTO.getIsbn(),
                     sectionDTO.getChapter(), sectionDTO.getPages(), sectionDTO.getType());
+
+            validation.validateBookSectionReference(section);
             return validation.validateRequiredBookSection(section);
 
         } else if (referenceDTO.getClass() == BookReferenceDTO.class) {
 
             BookReferenceDTO bookDTO = (BookReferenceDTO) referenceDTO;
-            validation.validateBookReferenceDTO(bookDTO);
             BookReference book = new BookReference(bookDTO.getTitle(), bookDTO.getYear(), bookDTO.getMonth(), bookDTO.getNote(), user,
                     bookDTO.getAuthor(), bookDTO.getEditor(), bookDTO.getPublisher(), bookDTO.getVolume(), bookDTO.getNumber(), bookDTO.getSeries(), bookDTO.getAddress(), bookDTO.getEdition(), bookDTO.getIsbn());
+
+            validation.validateBookReference(book);
             return validation.validateRequiredBook(book);
 
         } else if (referenceDTO.getClass() == BookLetReferenceDTO.class) {
 
             BookLetReferenceDTO letDTO = (BookLetReferenceDTO) referenceDTO;
-            validation.validateBookLetReferenceDTO(letDTO);
             BookLetReference let = new BookLetReference(letDTO.getTitle(), letDTO.getYear(), letDTO.getMonth(), letDTO.getNote(), user,
                     letDTO.getAuthor(), letDTO.getHowpublished(), letDTO.getAddress());
+
+            validation.validateBookLetReference(let);
             return validation.validateRequiredBookLet(let);
 
         } else if (referenceDTO.getClass() == ConferenceProceedingsReferenceDTO.class) {
 
             ConferenceProceedingsReferenceDTO proceedingsDTO = (ConferenceProceedingsReferenceDTO) referenceDTO;
-            validation.validateConferenceProceedingsReferenceDTO(proceedingsDTO);
             ConferenceProceedingReference proceedings = new ConferenceProceedingReference(proceedingsDTO.getTitle(), proceedingsDTO.getYear(), proceedingsDTO.getMonth(), proceedingsDTO.getNote(), user,
                     proceedingsDTO.getEditor(), proceedingsDTO.getVolume(), proceedingsDTO.getNumber(), proceedingsDTO.getSeries(), proceedingsDTO.getAddress(), proceedingsDTO.getPublisher(), proceedingsDTO.getIsbn(), proceedingsDTO.getOrganization());
+
+            validation.validateConferenceProceedingsReference(proceedings);
             return validation.validateRequiredConferenceProceedings(proceedings);
 
         } else if (referenceDTO.getClass() == ConferencePaperReferenceDTO.class) {
 
             ConferencePaperReferenceDTO paperDTO = (ConferencePaperReferenceDTO) referenceDTO;
-            validation.validateConferencePaperReferenceDTO(paperDTO);
             ConferencePaperReference paper = new ConferencePaperReference(paperDTO.getTitle(), paperDTO.getYear(), paperDTO.getMonth(), paperDTO.getNote(), user,
                     paperDTO.getAuthor(), paperDTO.getBookTitle(), paperDTO.getEditor(), paperDTO.getNumber(), paperDTO.getSeries(), paperDTO.getPublisher(), paperDTO.getVolume(), paperDTO.getAddress(), paperDTO.getPages(), paperDTO.getOrganization());
+
+            validation.validateConferencePaperReference(paper);
             return validation.validateRequiredConferencePaper(paper);
 
         } else if (referenceDTO.getClass() == WebPageReferenceDTO.class) {
 
             WebPageReferenceDTO webDTO = (WebPageReferenceDTO) referenceDTO;
-            validation.validateWebPageReferenceDTO(webDTO);
-            return new WebPageReference(webDTO.getTitle(), webDTO.getYear(), webDTO.getMonth(), webDTO.getNote(), user,
-                    webDTO.getAuthor(), webDTO.getUrl());
+            WebPageReference webPage = new WebPageReference(webDTO.getTitle(), webDTO.getYear(), webDTO.getMonth(), webDTO.getNote(), user, webDTO.getAuthor(), webDTO.getUrl());
+
+            validation.validateWebPageReference(webPage);
+            return webPage;
 
         } else {
 
             ThesisReferenceDTO thesisDTO = (ThesisReferenceDTO) referenceDTO;
-            validation.validateThesisReferenceDTO(thesisDTO);
             ThesisReference thesis = new ThesisReference(thesisDTO.getTitle(), thesisDTO.getYear(), thesisDTO.getMonth(), thesisDTO.getNote(), user,
                     thesisDTO.getAuthor(), thesisDTO.getSchool(), thesisDTO.getType(), thesisDTO.getAddress());
+            validation.validateThesisReference(thesis);
             return validation.validateRequiredThesis(thesis);
         }
     }

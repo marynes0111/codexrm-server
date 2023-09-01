@@ -11,7 +11,7 @@ public class ValidateReference {
         this.validations = new FieldValidations();
     }
 
-    public void validateArticleReferenceDTO(ArticleReferenceDTO article) {
+    public void validateArticleReference(ArticleReference article) {
 
         if (validations.isInvalidateYear(article.getYear()))
             article.setYear(null);
@@ -32,7 +32,7 @@ public class ValidateReference {
             article.setIssn(null);
     }
 
-    public void validateBookLetReferenceDTO(BookLetReferenceDTO let) {
+    public void validateBookLetReference(BookLetReference let) {
 
         if (validations.isInvalidateYear(let.getYear()))
             let.setYear(null);
@@ -44,7 +44,7 @@ public class ValidateReference {
             let.setAddress(null);
     }
 
-    public void validateBookReferenceDTO(BookReferenceDTO book) {
+    public void validateBookReference(BookReference book) {
 
         if (validations.isInvalidateYear(book.getYear()))
             book.setYear(null);
@@ -74,9 +74,9 @@ public class ValidateReference {
             book.setIsbn(null);
     }
 
-    public void validateBookSectionReferenceDTO(BookSectionReferenceDTO section) {
+    public void validateBookSectionReference(BookSectionReference section) {
 
-        validateBookReferenceDTO(section);
+        validateBookReference(section);
 
         if (validations.isInvalidateChapterOrVolume(section.getChapter()))
             section.setChapter(null);
@@ -85,7 +85,7 @@ public class ValidateReference {
             section.setPages(null);
     }
 
-    public void validateConferencePaperReferenceDTO(ConferencePaperReferenceDTO paper) {
+    public void validateConferencePaperReference(ConferencePaperReference paper) {
 
         if (validations.isInvalidateYear(paper.getYear()))
             paper.setYear(null);
@@ -112,7 +112,7 @@ public class ValidateReference {
             paper.setPages(null);
     }
 
-    public void validateConferenceProceedingsReferenceDTO(ConferenceProceedingsReferenceDTO proceedings) {
+    public void validateConferenceProceedingsReference(ConferenceProceedingReference proceedings) {
 
         if (validations.isInvalidateYear(proceedings.getYear()))
             proceedings.setYear(null);
@@ -136,7 +136,7 @@ public class ValidateReference {
             proceedings.setIsbn(null);
     }
 
-    public void validateThesisReferenceDTO(ThesisReferenceDTO thesis) {
+    public void validateThesisReference(ThesisReference thesis) {
 
         if (validations.isInvalidateYear(thesis.getYear()))
             thesis.setYear(null);
@@ -148,7 +148,7 @@ public class ValidateReference {
             thesis.setAddress(null);
     }
 
-    public void validateWebPageReferenceDTO(WebPageReferenceDTO webPage) {
+    public void validateWebPageReference(WebPageReference webPage) {
 
         if (validations.isInvalidateYear(webPage.getYear()))
             webPage.setYear(null);

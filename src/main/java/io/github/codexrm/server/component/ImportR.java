@@ -12,9 +12,11 @@ import java.util.ArrayList;
 public class ImportR {
 
     private final EnumsConverter enumsConverter;
+    private final ValidateReference validation;
 
     public ImportR() {
         this.enumsConverter = new EnumsConverter();
+        this.validation = new ValidateReference();
     }
 
     public ArrayList<Reference> importReferences(String path, String format) throws IOException, TokenMgrException, ParseException {
@@ -25,7 +27,9 @@ public class ImportR {
         ArrayList<BaseR> list = manager.importReferences(path, enumsConverter.getFormat(format));
 
         for (BaseR entry : list) {
-            referenceList.add(createReference(entry));
+            Reference reference = createReference(entry);
+            if(reference != null)
+                referenceList.add(reference);
         }
         return referenceList;
     }
@@ -88,7 +92,8 @@ public class ImportR {
         article.setPages(entry.getPages());
         article.setIssn(entry.getIssn());
 
-        return article;
+        validation.validateArticleReference(article);
+        return validation.validateRequiredArticle(article);
     }
 
     private Reference readBookReference(BookR entry) {
@@ -106,7 +111,8 @@ public class ImportR {
         book.setEdition(entry.getEdition());
         book.setIsbn(entry.getIsbn());
 
-        return book;
+        validation.validateBookReference(book);
+        return validation.validateRequiredBook(book);
     }
 
     private Reference readBookSectionReference(BookSectionR entry) {
@@ -127,7 +133,8 @@ public class ImportR {
         section.setEdition(entry.getEdition());
         section.setIsbn(entry.getIsbn());
 
-        return section;
+        validation.validateBookSectionReference(section);
+        return validation.validateRequiredBookSection(section);
     }
 
     private Reference readBookLetReference(BookLetR entry) {
@@ -139,7 +146,8 @@ public class ImportR {
         let.setHowpublished(entry.getHowpublished());
         let.setAddress(entry.getAddress());
 
-        return let;
+        validation.validateBookLetReference(let);
+        return validation.validateRequiredBookLet(let);
     }
 
     private Reference readThesisReference(ThesisR entry) {
@@ -152,7 +160,8 @@ public class ImportR {
         thesis.setType(enumsConverter.getThesisType(entry.getType()));
         thesis.setAddress(entry.getAddress());
 
-        return thesis;
+        validation.validateThesisReference(thesis);
+        return validation.validateRequiredThesis(thesis);
     }
 
     private Reference readConferenceProceedingsReference(ConferenceProceedingsR entry) {
@@ -169,7 +178,8 @@ public class ImportR {
         proceedings.setOrganization(entry.getOrganization());
         proceedings.setIsbn(entry.getIsbn());
 
-        return proceedings;
+        validation.validateConferenceProceedingsReference(proceedings);
+        return validation.validateRequiredConferenceProceedings(proceedings);
     }
 
     private Reference readConferencePaperReference(ConferencePaperR entry) {
@@ -188,7 +198,8 @@ public class ImportR {
         paper.setOrganization(entry.getOrganization());
         paper.setPublisher(entry.getPublisher());
 
-        return paper;
+        validation.validateConferencePaperReference(paper);
+        return validation.validateRequiredConferencePaper(paper);
     }
 
     private Reference readWebPageReference(WebPageR entry) {
@@ -199,6 +210,7 @@ public class ImportR {
         webPage.setAuthor(entry.getAuthor());
         webPage.setUrl(entry.getUrl());
 
+        validation.validateWebPageReference(webPage);
         return webPage;
     }
 }
