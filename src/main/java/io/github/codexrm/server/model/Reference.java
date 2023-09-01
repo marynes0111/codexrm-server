@@ -38,27 +38,51 @@ public class Reference {
         this.user = user;
     }
 
-    public Integer getId() { return id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public void setId(Integer id) { this.id = id; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public String getTitle() { return title; }
+    public String getTitle() {
+        return title;
+    }
 
-    public void setTitle(String title) { this.title = title; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getYear() { return year; }
+    public String getYear() {
+        return year;
+    }
 
-    public void setYear(String year) { this.year = year; }
+    public void setYear(String year) {
+        this.year = year;
+    }
 
-    public String getMonth() { return month; }
+    public String getMonth() {
+        return month;
+    }
 
-    public void setMonth(String month) { this.month = month; }
+    public void setMonth(String month) {
+        this.month = month;
+    }
 
-    public String getNote() { return note; }
+    public String getNote() {
+        return note;
+    }
 
-    public void setNote(String note) { this.note = note; }
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-    public User getUser() { return user; }
+    public User getUser() {
+        return user;
+    }
 
-    public void setUser(User user) { this.user = user; }
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "bookreference")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class BookReference extends Reference{
+public class BookReference extends Reference {
 
     @Column(name = "author")
     private String author;
@@ -49,39 +49,75 @@ public class BookReference extends Reference{
         this.isbn = isbn;
     }
 
-    public String getEdition() {return edition;}
+    public String getEdition() {
+        return edition;
+    }
 
-    public void setEdition(String edition) {this.edition = edition;}
+    public void setEdition(String edition) {
+        this.edition = edition;
+    }
 
-    public String getAddress() {return address;}
+    public String getAddress() {
+        return address;
+    }
 
-    public void setAddress(String address) {this.address = address;}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-    public String getSeries() {return series;}
+    public String getSeries() {
+        return series;
+    }
 
-    public void setSeries(String series) {this.series = series;}
+    public void setSeries(String series) {
+        this.series = series;
+    }
 
-    public String getVolume() {return volume;}
+    public String getVolume() {
+        return volume;
+    }
 
-    public void setVolume(String volume) {this.volume = volume;}
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
 
-    public String getPublisher() {return publisher;}
+    public String getPublisher() {
+        return publisher;
+    }
 
-    public void setPublisher(String publisher) {this.publisher = publisher;}
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
-    public String getAuthor() { return author; }
+    public String getAuthor() {
+        return author;
+    }
 
-    public void setAuthor(String author) { this.author = author; }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-    public String getEditor() { return editor; }
+    public String getEditor() {
+        return editor;
+    }
 
-    public void setEditor(String editor) { this.editor = editor; }
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
 
-    public String getNumber() { return number; }
+    public String getNumber() {
+        return number;
+    }
 
-    public void setNumber(String number) { this.number = number; }
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-    public String getIsbn() { return isbn; }
+    public String getIsbn() {
+        return isbn;
+    }
 
-    public void setIsbn(String isbn) { this.isbn = isbn; }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 }

@@ -1,6 +1,8 @@
 package io.github.codexrm.server.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "conferenceproceedingsreference")
@@ -68,23 +70,43 @@ public class ConferenceProceedingReference extends Reference {
         this.volume = volume;
     }
 
-    public String getEditor() { return editor; }
+    public String getEditor() {
+        return editor;
+    }
 
-    public void setEditor(String editor) { this.editor = editor; }
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
 
-    public String getNumber() { return number; }
+    public String getNumber() {
+        return number;
+    }
 
-    public void setNumber(String number) { this.number = number; }
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-    public String getPublisher() { return publisher; }
+    public String getPublisher() {
+        return publisher;
+    }
 
-    public void setPublisher(String publisher) { this.publisher = publisher; }
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
-    public String getIsbn() { return isbn; }
+    public String getIsbn() {
+        return isbn;
+    }
 
-    public void setIsbn(String isbn) { this.isbn = isbn; }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-    public String getOrganization() { return organization; }
+    public String getOrganization() {
+        return organization;
+    }
 
-    public void setOrganization(String organization) { this.organization = organization; }
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
 }

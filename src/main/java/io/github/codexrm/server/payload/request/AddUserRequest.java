@@ -3,8 +3,9 @@ package io.github.codexrm.server.payload.request;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
-public class SignupRequest {
+public class AddUserRequest {
 
     @NotBlank
     @Size(min = 3, max = 20)
@@ -28,6 +29,8 @@ public class SignupRequest {
     private String lastName;
 
     private boolean enabled;
+
+    private List<String> roles;
 
     public String getUsername() {
         return username;
@@ -75,5 +78,13 @@ public class SignupRequest {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

@@ -1,6 +1,8 @@
 package io.github.codexrm.server.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "articlereference")
@@ -36,27 +38,51 @@ public class ArticleReference extends Reference {
         this.issn = issn;
     }
 
-    public String getAuthor() { return author; }
+    public String getAuthor() {
+        return author;
+    }
 
-    public void setAuthor(String author) { this.author = author; }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-    public String getJournal() { return journal; }
+    public String getJournal() {
+        return journal;
+    }
 
-    public void setJournal(String journal) { this.journal = journal; }
+    public void setJournal(String journal) {
+        this.journal = journal;
+    }
 
-    public String getVolume() { return volume; }
+    public String getVolume() {
+        return volume;
+    }
 
-    public void setVolume(String volume) { this.volume = volume; }
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
 
-    public String getNumber() { return number; }
+    public String getNumber() {
+        return number;
+    }
 
-    public void setNumber(String number) { this.number = number; }
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-    public String getPages() { return pages; }
+    public String getPages() {
+        return pages;
+    }
 
-    public void setPages(String pages) { this.pages = pages; }
+    public void setPages(String pages) {
+        this.pages = pages;
+    }
 
-    public String getIssn() { return issn; }
+    public String getIssn() {
+        return issn;
+    }
 
-    public void setIssn(String issn) { this.issn = issn; }
+    public void setIssn(String issn) {
+        this.issn = issn;
+    }
 }

@@ -63,11 +63,19 @@ public class ArticleReferenceDTO extends ReferenceDTO {
         this.pages = pages;
     }
 
-    public String getAuthor() { return author; }
+    public String getAuthor() {
+        return author;
+    }
 
-    public void setAuthor(String author) { this.author = author; }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-    public String getIssn() { return issn; }
+    public String getIssn() {
+        return issn;
+    }
 
-    public void setIssn(String issn) { this.issn = issn; }
+    public void setIssn(String issn) {
+        this.issn = issn;
+    }
 }

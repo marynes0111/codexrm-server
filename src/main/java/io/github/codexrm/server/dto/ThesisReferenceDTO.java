@@ -1,6 +1,6 @@
 package io.github.codexrm.server.dto;
 
-public class ThesisReferenceDTO extends ReferenceDTO{
+public class ThesisReferenceDTO extends ReferenceDTO {
 
     private String author;
     private String school;
@@ -25,9 +25,13 @@ public class ThesisReferenceDTO extends ReferenceDTO{
         this.address = address;
     }
 
-    public String getAuthor() { return author; }
+    public String getAuthor() {
+        return author;
+    }
 
-    public void setAuthor(String author) { this.author = author; }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public String getSchool() {
         return school;

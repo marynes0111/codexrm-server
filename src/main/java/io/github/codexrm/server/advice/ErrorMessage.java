@@ -3,31 +3,32 @@ package io.github.codexrm.server.advice;
 import java.util.Date;
 
 public class ErrorMessage {
-  private int statusCode;
-  private Date timestamp;
-  private String message;
-  private String description;
 
-  public ErrorMessage(int statusCode, Date timestamp, String message, String description) {
-    this.statusCode = statusCode;
-    this.timestamp = timestamp;
-    this.message = message;
-    this.description = description;
-  }
+    private final int statusCode;
+    private final Date timestamp;
+    private final String message;
+    private final String description;
 
-  public int getStatusCode() {
-    return statusCode;
-  }
+    public ErrorMessage(int statusCode, Date timestamp, String message, String description) {
+        this.statusCode = statusCode;
+        this.timestamp = timestamp;
+        this.message = message;
+        this.description = description;
+    }
 
-  public Date getTimestamp() {
-    return timestamp;
-  }
+    public int getStatusCode() {
+        return statusCode;
+    }
 
-  public String getMessage() {
-    return message;
-  }
+    public Date getTimestamp() {
+        return timestamp;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getMessage() {
+        return message;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

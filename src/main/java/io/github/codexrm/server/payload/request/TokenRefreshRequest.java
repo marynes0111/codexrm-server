@@ -3,14 +3,15 @@ package io.github.codexrm.server.payload.request;
 import javax.validation.constraints.NotBlank;
 
 public class TokenRefreshRequest {
-  @NotBlank
-  private String refreshToken;
 
-  public String getRefreshToken() {
-    return refreshToken;
-  }
+    @NotBlank
+    private String refreshToken;
 
-  public void setRefreshToken(String refreshToken) {
-    this.refreshToken = refreshToken;
-  }
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }

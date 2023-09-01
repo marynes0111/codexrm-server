@@ -8,7 +8,10 @@ import io.github.codexrm.server.model.User;
 import io.github.codexrm.server.repository.ReferenceRepository;
 import org.jbibtex.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -24,13 +27,12 @@ public class ReferenceService {
     private final ReferenceRepository referenceRepository;
     private final ImportR importR;
     private final ExportR exportR;
-
-
+    
     @Autowired
     public ReferenceService(final ReferenceRepository referenceRepository) {
         this.referenceRepository = referenceRepository;
-        importR = new ImportR();
-        exportR = new ExportR();
+        this.importR = new ImportR();
+        this.exportR = new ExportR();
     }
 
     public Page<Reference> getAll(User user, String year, String title, int page, int size, SortReference sort) {
@@ -40,16 +42,16 @@ public class ReferenceService {
 
         if (year == null && title == null) {
             return referenceRepository.findByUser(user, pagingSort);
-        }
-        else{
-            if(year == null && title != null){
+       
+        } else {
+            if (year == null) {
                 return referenceRepository.findByUserAndTitleContaining(user, title, pagingSort);
-            }
-            else{
-                if(year != null && title == null){
+           
+            } else {
+                if (title == null) {
                     return referenceRepository.findByUserAndYearContaining(user, year, pagingSort);
-                }
-                else{
+              
+                } else {
                     return null;
                 }
             }
@@ -61,16 +63,15 @@ public class ReferenceService {
     }
 
     public Reference add(Reference reference) {
-        if (reference.getId() != null && referenceRepository.existsById(reference.getId())) {
+        if (reference.getId() != null && referenceRepository.existsById(reference.getId()))
             throw new EntityExistsException("There is already existing entity with such ID in the database.");
-        }
+
         return referenceRepository.save(reference);
     }
 
     public Reference update(Reference reference) {
-        if (reference.getId() != null && !referenceRepository.existsById(reference.getId())) {
+        if (reference.getId() != null && !referenceRepository.existsById(reference.getId()))
             throw new EntityNotFoundException("There is no entity with such ID in the database.");
-        }
 
         return referenceRepository.save(reference);
     }
@@ -80,25 +81,23 @@ public class ReferenceService {
     }
 
     public void sync(List<Reference> newReferenceList, List<Reference> updateReferenceList, List<Integer> deleteReferenceList) {
-        for(Reference reference: newReferenceList){
+        for (Reference reference : newReferenceList) {
             add(reference);
         }
-        for(Reference reference: updateReferenceList){
+        for (Reference reference : updateReferenceList) {
             update(reference);
         }
-        for(Integer id: deleteReferenceList){
+        for (Integer id : deleteReferenceList) {
             delete(id);
         }
     }
 
     public ArrayList<Reference> importReferences(String path, String format) throws IOException, ParseException {
-
-        return importR.importReferences(path,format);
+        return importR.importReferences(path, format);
     }
 
-    public void exportReferences(File file, ArrayList<Reference> referenceList, String format) throws IOException, ParseException {
-
-        exportR.exportReferenceList(file,referenceList, format);
+    public void exportReferences(File file, ArrayList<Reference> referenceList, String format) throws IOException {
+        exportR.exportReferenceList(file, referenceList, format);
     }
 
     public Page<Reference> getAllFromUsers(String year, String title, int page, int size, SortReference sort) {
@@ -107,16 +106,16 @@ public class ReferenceService {
 
         if (year == null && title == null) {
             return referenceRepository.findAll(pagingSort);
-        }
-        else{
-            if(year == null && title != null){
+        
+        } else {
+            if (year == null) {
                 return referenceRepository.findByTitleContaining(title, pagingSort);
-            }
-            else{
-                if(year != null && title == null){
+           
+            } else {
+                if (title == null) {
                     return referenceRepository.findByYearContaining(year, pagingSort);
-                }
-                else{
+               
+                } else {
                     return null;
                 }
             }
@@ -124,10 +123,10 @@ public class ReferenceService {
     }
 
     private Sort.Order getOrder(SortReference sort) {
-        if (sort == null) {
+        if (sort == null)
             return new Sort.Order(Sort.Direction.ASC, "id");
 
-        }else {
+         else {
             switch (sort) {
                 case idAsc:
                     return new Sort.Order(Sort.Direction.ASC, "id");

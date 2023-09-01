@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ExportR {
 
-    EnumsConverter enumsConverter;
+    private final EnumsConverter enumsConverter;
 
     public ExportR() {
         this.enumsConverter = new EnumsConverter();
@@ -24,7 +24,7 @@ public class ExportR {
         for (Reference reference : referenceList) {
             BaseR entry = identifyType(reference);
             if (entry != null) {
-               list.add(entry);
+                list.add(entry);
             }
         }
 
@@ -42,8 +42,8 @@ public class ExportR {
         } else {
             if (reference instanceof BookSectionReference) {
                 BookSectionReference section = (BookSectionReference) reference;
-                entry = new BookSectionR( section.getTitle(),  section.getYear(), enumsConverter.getMonthLibrary(section.getMonth()),  section.getNote(),  section.getId(),  section.getAuthor(),  section.getEditor(),  section.getPublisher(),  section.getVolume(), section.getNumber(),
-                        section.getSeries(),  section.getAddress(),  section.getEdition(),  section.getIsbn(),  section.getChapter(), section.getPages(), enumsConverter.getBookSectionTypeLibrary(section.getType()));
+                entry = new BookSectionR(section.getTitle(), section.getYear(), enumsConverter.getMonthLibrary(section.getMonth()), section.getNote(), section.getId(), section.getAuthor(), section.getEditor(), section.getPublisher(), section.getVolume(), section.getNumber(),
+                        section.getSeries(), section.getAddress(), section.getEdition(), section.getIsbn(), section.getChapter(), section.getPages(), enumsConverter.getBookSectionTypeLibrary(section.getType()));
 
             } else {
                 if (reference instanceof BookReference) {
@@ -74,11 +74,11 @@ public class ExportR {
                                     entry = new WebPageR(webPage.getTitle(), webPage.getYear(), enumsConverter.getMonthLibrary(webPage.getMonth()), webPage.getNote(), webPage.getId(), webPage.getAuthor(), webPage.getUrl());
 
                                 } else {
-                                    if(reference instanceof BookLetReference){
+                                    if (reference instanceof BookLetReference) {
                                         BookLetReference let = (BookLetReference) reference;
                                         entry = new BookLetR(let.getTitle(), let.getYear(), enumsConverter.getMonthLibrary(let.getMonth()), let.getNote(), let.getId(), let.getAuthor(), let.getHowpublished(), let.getAddress());
 
-                                    }else{
+                                    } else {
                                         entry = null;
                                     }
                                 }

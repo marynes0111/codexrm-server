@@ -1,10 +1,12 @@
 package io.github.codexrm.server.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "bookletreference")
-public class BookLetReference extends Reference{
+public class BookLetReference extends Reference {
 
     @Column(name = "author")
     private String author;
@@ -25,15 +27,27 @@ public class BookLetReference extends Reference{
         this.address = address;
     }
 
-    public String getAddress() {return address;}
+    public String getAddress() {
+        return address;
+    }
 
-    public void setAddress(String address) {this.address = address;}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-    public String getHowpublished() {return howpublished;}
+    public String getHowpublished() {
+        return howpublished;
+    }
 
-    public void setHowpublished(String howpublished) {this.howpublished = howpublished;}
+    public void setHowpublished(String howpublished) {
+        this.howpublished = howpublished;
+    }
 
-    public String getAuthor() { return author; }
+    public String getAuthor() {
+        return author;
+    }
 
-    public void setAuthor(String author) { this.author = author; }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 }

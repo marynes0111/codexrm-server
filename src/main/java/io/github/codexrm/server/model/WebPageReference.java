@@ -14,7 +14,6 @@ public class WebPageReference extends Reference {
     @Column(name = "url")
     private String url;
 
-
     public WebPageReference() {}
 
     public WebPageReference(String title, String year, String month, String note, User user, String author, String url) {
@@ -23,11 +22,19 @@ public class WebPageReference extends Reference {
         this.url = url;
     }
 
-    public String getAuthor() { return author; }
+    public String getAuthor() {
+        return author;
+    }
 
-    public void setAuthor(String author) { this.author = author; }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-    public String getUrl() { return url; }
+    public String getUrl() {
+        return url;
+    }
 
-    public void setUrl(String url) { this.url = url; }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

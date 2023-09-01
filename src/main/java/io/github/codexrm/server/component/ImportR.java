@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ImportR {
 
-    EnumsConverter enumsConverter;
+    private final EnumsConverter enumsConverter;
 
     public ImportR() {
         this.enumsConverter = new EnumsConverter();
@@ -47,16 +47,16 @@ public class ImportR {
                     } else {
                         if (entry instanceof ConferenceProceedingsR) {
                             reference = readConferenceProceedingsReference((ConferenceProceedingsR) entry);
-                        }else {
+                        } else {
                             if (entry instanceof ConferencePaperR) {
                                 reference = readConferencePaperReference((ConferencePaperR) entry);
-                            }else {
+                            } else {
                                 if (entry instanceof WebPageR) {
                                     reference = readWebPageReference((WebPageR) entry);
                                 } else {
-                                    if(entry instanceof BookLetR){
+                                    if (entry instanceof BookLetR) {
                                         reference = readBookLetReference((BookLetR) entry);
-                                    }else{
+                                    } else {
                                         reference = null;
                                     }
                                 }

@@ -1,11 +1,13 @@
 package io.github.codexrm.server.component;
 
-import io.github.codexrm.EILibrary.enums.*;
+import io.github.codexrm.EILibrary.enums.BookSectionTypeLibrary;
+import io.github.codexrm.EILibrary.enums.FormatLibrary;
+import io.github.codexrm.EILibrary.enums.MonthsLibrary;
+import io.github.codexrm.EILibrary.enums.ThesisTypeLibrary;
 
 public class EnumsConverter {
 
-    public EnumsConverter() {
-    }
+    public EnumsConverter() {}
 
     public MonthsLibrary getMonthLibrary(String months) {
 
