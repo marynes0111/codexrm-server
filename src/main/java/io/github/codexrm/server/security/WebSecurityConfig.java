@@ -4,7 +4,6 @@ import io.github.codexrm.server.security.jwt.AuthEntryPointJwt;
 import io.github.codexrm.server.security.jwt.AuthTokenFilter;
 import io.github.codexrm.server.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,9 +1,6 @@
 package io.github.codexrm.server.component;
 
-import io.github.codexrm.EILibrary.enums.BookSectionTypeLibrary;
-import io.github.codexrm.EILibrary.enums.FormatLibrary;
-import io.github.codexrm.EILibrary.enums.MonthsLibrary;
-import io.github.codexrm.EILibrary.enums.ThesisTypeLibrary;
+import io.github.codexrm.EILibrary.enums.*;
 
 public class EnumsConverter {
 

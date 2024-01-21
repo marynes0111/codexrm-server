@@ -1,6 +1,5 @@
 package io.github.codexrm.server.component;
 
-import io.github.codexrm.server.dto.*;
 import io.github.codexrm.server.model.*;
 
 public class ValidateReference {
